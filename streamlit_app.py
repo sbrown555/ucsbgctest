@@ -94,53 +94,6 @@ df2 = df.assign(**cal)[list(cal.keys())]
 cutoff = pd.Timestamp("2025-04-30 17:00")
 df2 = df2[df2['DateTime'] > cutoff]
 
-# ——— Plot Section ———
-
-# MELT for long-form plotting
-temp_cols = [c for c in df2.columns if "Temp" in c]
-vwc_cols = [c for c in df2.columns if "VWC" in c]
-
-
-
-# ——— Temperature Chart ———
-df_temp = df2.melt(id_vars=["DateTime"],
-                   value_vars=temp_cols,
-                   var_name="Sensor",
-                   value_name="Temperature")
-
-
-fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
-fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=600)
-
-
-
-# ——— VWC Chart ———
-
-df_vwc = df2.melt(id_vars=["DateTime"],
-                  value_vars=vwc_cols,
-                  var_name="Sensor",
-                  value_name="VWC")
-
-# Split the Sensor column by space into separate parts
-split_cols = df_vwc['Sensor'].str.split(' ', expand=True)
-
-# Assign new columns
-df_vwc['C'] = split_cols[0]          # "HiC" or "LowC"
-df_vwc['moisture'] = split_cols[1]   # "Wet" or "Dry"
-df_vwc['level'] = split_cols[3]      # "Upper" or "Lower"
-
-options = list(df_vwc.columns)
-
-group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
-
-if group_vwc:
-    df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
-    df_vwc_grouped = df_vwc.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['VWC'].mean()
-    fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
-    fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-    # st.plotly_chart(fig_vwc)
-else:
-    print("Please select at least one column.")
 
 # 3. Error Log Section
 
@@ -187,59 +140,59 @@ with col2:
     )
 
 
-
-# ——— Display the Graphs After the Error and Download Sections ———
-# ——— Interactive Grouping for Temperature ———
-group_map = {
-    "Position (Upper/Lower)": ["Upper", "Lower"],
-    "Carbon Dioxide (HiC/LoC)": ["HiC", "LoC"],
-    "Moisture (Wet/Dry)": ["Wet", "Dry"],
-    "Species": ["PIPO", "QUCH", "QUWI", "PISA"]
-}
+# ——— Plot Section ———
 
 
-st.markdown("### 🌡️ Temperature Sensors")
+# ——— Temperature Chart ———
+temp_cols = [c for c in df2.columns if "Temp" in c]
+df_temp = df2.melt(id_vars=["DateTime"],
+                   value_vars=temp_cols,
+                   var_name="Sensor",
+                   value_name="Temperature")
 
-group_temp = st.radio("Group temperature lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)", "Species"], key="temp_radio")
+# Split the Sensor column by space into separate columns
+split_cols = df_temp['Sensor'].str.split(' ', expand = True)
+df_temp['CO2_Treatment'] = split_cols[0]
+df_temp['Moisture_Treatment'] = split_cols[1]
+df_temp['Sensor_Position'] = split_cols[2]
 
-if group_temp == "None":
-    st.plotly_chart(fig_temp, use_container_width=True)
+options_temp = list(df_temp.columns) - ['DateTime', 'Temperature']
+group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
+
+if group_temp:
+    df_temp['group'] = df_temp.groupby[group_temp].agg(' - '.join, axis=1)
+    df_temp_grouped = df_temp.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['Temperature'].mean()
+    fig_temp = px.line(df_temp_grouped, x = "DateTime", y = "Temperature_(C)", color = 'group', Title = 'Soil Sensors')
+    fig_temp.update_layout(xaxis_title = 'Time', yaxis_title = 'Temperature', height = 600)
 else:
-    keywords = group_map[group_temp]
-    temp_group_means = {}
-    for keyword in keywords:
-        filtered = df_temp[df_temp["Sensor"].str.contains(keyword, case=False)]
-        temp_group_means[keyword] = filtered.groupby("DateTime")["Temperature"].mean()
-    df_plot_temp = pd.DataFrame(temp_group_means).reset_index()
-    fig_group_temp = px.line(df_plot_temp, x="DateTime", y=keywords,
-                             title=f"Temperature — Averaged by {group_temp}")
-    fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
-    st.plotly_chart(fig_group_temp, use_container_width=True)
+    st.write('Please select at least one column.')
+    
 
-# ——— Interactive Grouping for VWC ———
-st.markdown("### 💧 Soil Moisture Sensors")
+# ——— VWC Chart ———
+vwc_cols = [c for c in df2.columns if "VWC" in c]
+df_vwc = df2.melt(id_vars=["DateTime"],
+                  value_vars=vwc_cols,
+                  var_name="Sensor",
+                  value_name="VWC")
 
-st.plotly_chart(fig_vwc, use_container_width=True)
+# Split the Sensor column by space into separate columns
+split_cols = df_vwc['Sensor'].str.split(' ', expand=True)
+df_vwc['CO2_Treatment'] = split_cols[0]          
+df_vwc['Moisture_Treatment'] = split_cols[1]  
+df_vwc['Sensor_Position'] = split_cols[3]     
 
-# group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
-# st.write(list(group_vwc))
+options_vwc = list(df_vwc.columns) - ['DateTime', 'VWC']
+group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_multiselect")
 
+if group_vwc:
+    df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
+    df_vwc_grouped = df_vwc.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['VWC'].mean()
+    fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
+    fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
+    # st.plotly_chart(fig_vwc)
+else:
+    st.write("Please select at least one column.")
 
-
-# if group_vwc == ["None"]:
-#     st.plotly_chart(fig_vwc, use_container_width=True)
-# else:
-#     for group in group_map:
-#         keywords = group[group_vwc]
-#         vwc_group_means = {}
-#     for keyword in keywords:
-#         filtered = df_vwc[df_vwc["Sensor"].str.contains(keyword, case=False)]
-#         vwc_group_means[keyword] = filtered.groupby("DateTime")["VWC"].mean()
-#     df_plot_vwc = pd.DataFrame(vwc_group_means).reset_index()
-#     fig_group_vwc = px.line(df_plot_vwc, x="DateTime", y=keywords,
-#                              title=f"Soil Moisture — Averaged by {group_vwc}")
-#     fig_group_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=500)
-#     st.plotly_chart(fig_group_vwc, use_container_width=True)
 
 # 4. Error List Section (Columns with NaN or 0 Values)
 def find_errors(df):
