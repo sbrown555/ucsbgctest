@@ -197,6 +197,7 @@ else:
 st.markdown("### 💧 Soil Moisture Sensors")
 
 group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
+print(group_vwc)
 
 if group_vwc == "None":
     st.plotly_chart(fig_vwc, use_container_width=True)
