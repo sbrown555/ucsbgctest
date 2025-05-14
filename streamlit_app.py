@@ -188,7 +188,7 @@ options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_grouping")
 
 filter_options_vwc = ['Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry']
-filter_vwc = st.multiselect(lable = "Filter out soil moisture lines by:", options = filter_options_vwc, key="vwc_filter")
+filter_vwc = st.multiselect(label = "Filter out soil moisture lines by:", options = filter_options_vwc, key="vwc_filter")
 
 df_vwc = df_vwc[~df_vwc.isin(filter_vwc).any(axis=1)]
 
