@@ -129,10 +129,11 @@ df_vwc['moisture'] = split_cols[1]   # "Wet" or "Dry"
 df_vwc['level'] = split_cols[3]      # "Upper" or "Lower"
 
 options = ["None"] + list(df_vwc.columns)
+
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
 
 
-fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color=group_vwc, title="Soil Moisture Sensors")
+fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color=['moisture','level'], title="Soil Moisture Sensors")
 fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
 
 # 3. Error Log Section
