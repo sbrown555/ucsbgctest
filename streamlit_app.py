@@ -129,23 +129,30 @@ df_vwc['C'] = split_cols[0]          # "HiC" or "LowC"
 df_vwc['moisture'] = split_cols[1]   # "Wet" or "Dry"
 df_vwc['level'] = split_cols[3]      # "Upper" or "Lower"
 
-options = ["None"] + list(df_vwc.columns)
+options = list(df_vwc.columns)
 
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
 
-fig_vwc, ax = plt.subplots(figsize=(10, 6))
+# fig_vwc, ax = plt.subplots(figsize=(10, 6))
 
-# Plot each group
-for group in group_vwc:
-    ax.plot(df_vwc['DateTime'], df_vwc['VWC'], label=group)
+# # Plot each group
+# for group in group_vwc:
+#     ax.plot(df_vwc['DateTime'], df_vwc['VWC'], label=group)
 
-# Customize
-ax.set_title("VWC Over Time by Moisture and Level")
-ax.set_xlabel("Date")
-ax.set_ylabel("VWC")
-ax.legend()
+# # Customize
+# ax.set_title("VWC Over Time by Moisture and Level")
+# ax.set_xlabel("Date")
+# ax.set_ylabel("VWC")
+# ax.legend()
 
-st.pyplot(fig_vwc)
+# st.pyplot(fig_vwc)
+
+if group_columns:
+    df_vwc['group'] = df[group_columns].agg(' - '.join, axis=1)
+    fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
+    fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
+else:
+    st.write("Please select at least one column.")
 
 # fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='moisture', title="Soil Moisture Sensors")
 # fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
