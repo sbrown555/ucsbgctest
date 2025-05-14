@@ -199,41 +199,41 @@ st.markdown("### 💧 Soil Moisture Sensors")
 group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
 st.write(group_vwc)
 
-if group_vwc == "None":
-    st.plotly_chart(fig_vwc, use_container_width=True)
-else:
-    keywords = group_map[group_vwc]
-    vwc_group_means = {}
-    for keyword in keywords:
-        filtered = df_vwc[df_vwc["Sensor"].str.contains(keyword, case=False)]
-        vwc_group_means[keyword] = filtered.groupby("DateTime")["VWC"].mean()
-    df_plot_vwc = pd.DataFrame(vwc_group_means).reset_index()
-    fig_group_vwc = px.line(df_plot_vwc, x="DateTime", y=keywords,
-                             title=f"Soil Moisture — Averaged by {group_vwc}")
-    fig_group_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=500)
-    st.plotly_chart(fig_group_vwc, use_container_width=True)
+# if group_vwc == "None":
+#     st.plotly_chart(fig_vwc, use_container_width=True)
+# else:
+#     keywords = group_map[group_vwc]
+#     vwc_group_means = {}
+#     for keyword in keywords:
+#         filtered = df_vwc[df_vwc["Sensor"].str.contains(keyword, case=False)]
+#         vwc_group_means[keyword] = filtered.groupby("DateTime")["VWC"].mean()
+#     df_plot_vwc = pd.DataFrame(vwc_group_means).reset_index()
+#     fig_group_vwc = px.line(df_plot_vwc, x="DateTime", y=keywords,
+#                              title=f"Soil Moisture — Averaged by {group_vwc}")
+#     fig_group_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=500)
+#     st.plotly_chart(fig_group_vwc, use_container_width=True)
 
-# 4. Error List Section (Columns with NaN or 0 Values)
-def find_errors(df):
-    errors = []
-    exclude_cols = ['e(9)', 'e(11)', 'e(12)', 'T(9)', 'T(11)', 'T(12)','RECORD']  # Columns to exclude
-    for col in df.columns:
-        if col in exclude_cols:
-            continue  # Skip excluded columns
-        if df[col].isna().any() or (df[col] == 0).any():
-            error_rows = df[df[col].isna() | (df[col] == 0)]
-            for _, row in error_rows.iterrows():
-                errors.append({'column': col, 'timestamp': row['TIMESTAMP']})
-    return errors
+# # 4. Error List Section (Columns with NaN or 0 Values)
+# def find_errors(df):
+#     errors = []
+#     exclude_cols = ['e(9)', 'e(11)', 'e(12)', 'T(9)', 'T(11)', 'T(12)','RECORD']  # Columns to exclude
+#     for col in df.columns:
+#         if col in exclude_cols:
+#             continue  # Skip excluded columns
+#         if df[col].isna().any() or (df[col] == 0).any():
+#             error_rows = df[df[col].isna() | (df[col] == 0)]
+#             for _, row in error_rows.iterrows():
+#                 errors.append({'column': col, 'timestamp': row['TIMESTAMP']})
+#     return errors
 
-errors = find_errors(df)
+# errors = find_errors(df)
 
-if errors:
-    # Sort errors by timestamp (latest first)
-    error_df = pd.DataFrame(errors)
-    error_df = error_df.sort_values(by='timestamp', ascending=False)
+# if errors:
+#     # Sort errors by timestamp (latest first)
+#     error_df = pd.DataFrame(errors)
+#     error_df = error_df.sort_values(by='timestamp', ascending=False)
     
-    st.write("### Columns with NaN or 0 Values:")
-    st.dataframe(error_df)  # Display the errors in a dataframe
-else:
-    st.write("### No NaN or Zero Values detected.")
+#     st.write("### Columns with NaN or 0 Values:")
+#     st.dataframe(error_df)  # Display the errors in a dataframe
+# else:
+#     st.write("### No NaN or Zero Values detected.")
