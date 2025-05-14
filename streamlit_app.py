@@ -209,8 +209,9 @@ with col2:
 #     fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
 #     st.plotly_chart(fig_group_temp, use_container_width=True)
 
-# # ——— Interactive Grouping for VWC ———
-# st.markdown("### 💧 Soil Moisture Sensors")
+# ——— Interactive Grouping for VWC ———
+st.markdown("### 💧 Soil Moisture Sensors")
+    st.plotly_chart(fig_vwc, use_container_width=True)
 
 # group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
 # st.write(list(group_vwc))
