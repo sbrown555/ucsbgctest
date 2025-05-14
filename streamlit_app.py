@@ -158,7 +158,7 @@ df_temp['Species'] = split_cols[2]
 df_temp['Sensor_Position'] = split_cols[3]
 
 filter_options_temp = ['Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_temp = st.multiselect(label = "Remove temperature lines by:", options = filter_options_tempc, key="temp_filter")
+filter_temp = st.multiselect(label = "Remove temperature lines by:", options = filter_options_temp, key="temp_filter")
 
 df_temp = df_temp[~df_temp.isin(filter_vwc).any(axis=1)]
 
