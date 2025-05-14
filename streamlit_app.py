@@ -188,7 +188,7 @@ with col2:
 
 
 
-——— Display the Graphs After the Error and Download Sections ———
+# ——— Display the Graphs After the Error and Download Sections ———
 # ——— Interactive Grouping for Temperature ———
 group_map = {
     "Position (Upper/Lower)": ["Upper", "Lower"],
