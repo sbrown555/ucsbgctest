@@ -138,7 +138,7 @@ if group_vwc:
     df_vwc_grouped = df_vwc.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['VWC'].mean()
     fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-    st.plotly_chart(fig_vwc)
+    # st.plotly_chart(fig_vwc)
 else:
     print("Please select at least one column.")
 
@@ -216,10 +216,10 @@ else:
     fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
     st.plotly_chart(fig_group_temp, use_container_width=True)
 
-# # ——— Interactive Grouping for VWC ———
-# st.markdown("### 💧 Soil Moisture Sensors")
+# ——— Interactive Grouping for VWC ———
+st.markdown("### 💧 Soil Moisture Sensors")
 
-# st.plotly_chart(fig_vwc, use_container_width=True)
+st.plotly_chart(fig_vwc, use_container_width=True)
 
 # group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
 # st.write(list(group_vwc))
