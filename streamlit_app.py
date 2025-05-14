@@ -4,7 +4,7 @@ from io import StringIO
 import plotly.express as px
 import streamlit as st
 from datetime import datetime, timedelta
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 st.set_page_config(layout='wide')
 
