@@ -115,6 +115,11 @@ df_vwc = df2.melt(id_vars=["DateTime"],
 fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
 fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=600)
 
+options = ["None"] + list(df_vwc.columns)
+group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
+
+
+
 # ——— VWC Chart ———
 fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color="Sensor", title="Soil Moisture Sensors")
 fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
@@ -166,44 +171,47 @@ with col2:
 
 
 # ——— Display the Graphs After the Error and Download Sections ———
-# ——— Interactive Grouping for Temperature ———
-group_map = {
-    "Position (Upper/Lower)": ["Upper", "Lower"],
-    "Carbon Dioxide (HiC/LoC)": ["HiC", "LoC"],
-    "Moisture (Wet/Dry)": ["Wet", "Dry"],
-    "Species": ["PIPO", "QUCH", "QUWI", "PISA"]
-}
+# # ——— Interactive Grouping for Temperature ———
+# group_map = {
+#     "Position (Upper/Lower)": ["Upper", "Lower"],
+#     "Carbon Dioxide (HiC/LoC)": ["HiC", "LoC"],
+#     "Moisture (Wet/Dry)": ["Wet", "Dry"],
+#     "Species": ["PIPO", "QUCH", "QUWI", "PISA"]
+# }
 
 
-st.markdown("### 🌡️ Temperature Sensors")
+# st.markdown("### 🌡️ Temperature Sensors")
 
-group_temp = st.radio("Group temperature lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)", "Species"], key="temp_radio")
+# group_temp = st.radio("Group temperature lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)", "Species"], key="temp_radio")
 
-if group_temp == "None":
-    st.plotly_chart(fig_temp, use_container_width=True)
-else:
-    keywords = group_map[group_temp]
-    temp_group_means = {}
-    for keyword in keywords:
-        filtered = df_temp[df_temp["Sensor"].str.contains(keyword, case=False)]
-        temp_group_means[keyword] = filtered.groupby("DateTime")["Temperature"].mean()
-    df_plot_temp = pd.DataFrame(temp_group_means).reset_index()
-    fig_group_temp = px.line(df_plot_temp, x="DateTime", y=keywords,
-                             title=f"Temperature — Averaged by {group_temp}")
-    fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
-    st.plotly_chart(fig_group_temp, use_container_width=True)
+# if group_temp == "None":
+#     st.plotly_chart(fig_temp, use_container_width=True)
+# else:
+#     keywords = group_map[group_temp]
+#     temp_group_means = {}
+#     for keyword in keywords:
+#         filtered = df_temp[df_temp["Sensor"].str.contains(keyword, case=False)]
+#         temp_group_means[keyword] = filtered.groupby("DateTime")["Temperature"].mean()
+#     df_plot_temp = pd.DataFrame(temp_group_means).reset_index()
+#     fig_group_temp = px.line(df_plot_temp, x="DateTime", y=keywords,
+#                              title=f"Temperature — Averaged by {group_temp}")
+#     fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
+#     st.plotly_chart(fig_group_temp, use_container_width=True)
 
-# ——— Interactive Grouping for VWC ———
-st.markdown("### 💧 Soil Moisture Sensors")
+# # ——— Interactive Grouping for VWC ———
+# st.markdown("### 💧 Soil Moisture Sensors")
 
-group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
-st.write(list(group_vwc))
+# group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
+# st.write(list(group_vwc))
 
-# if group_vwc == "None":
+
+
+# if group_vwc == ["None"]:
 #     st.plotly_chart(fig_vwc, use_container_width=True)
 # else:
-#     keywords = group_map[group_vwc]
-#     vwc_group_means = {}
+#     for group in group_map:
+#         keywords = group[group_vwc]
+#         vwc_group_means = {}
 #     for keyword in keywords:
 #         filtered = df_vwc[df_vwc["Sensor"].str.contains(keyword, case=False)]
 #         vwc_group_means[keyword] = filtered.groupby("DateTime")["VWC"].mean()
@@ -213,27 +221,27 @@ st.write(list(group_vwc))
 #     fig_group_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=500)
 #     st.plotly_chart(fig_group_vwc, use_container_width=True)
 
-# # 4. Error List Section (Columns with NaN or 0 Values)
-# def find_errors(df):
-#     errors = []
-#     exclude_cols = ['e(9)', 'e(11)', 'e(12)', 'T(9)', 'T(11)', 'T(12)','RECORD']  # Columns to exclude
-#     for col in df.columns:
-#         if col in exclude_cols:
-#             continue  # Skip excluded columns
-#         if df[col].isna().any() or (df[col] == 0).any():
-#             error_rows = df[df[col].isna() | (df[col] == 0)]
-#             for _, row in error_rows.iterrows():
-#                 errors.append({'column': col, 'timestamp': row['TIMESTAMP']})
-#     return errors
+# 4. Error List Section (Columns with NaN or 0 Values)
+def find_errors(df):
+    errors = []
+    exclude_cols = ['e(9)', 'e(11)', 'e(12)', 'T(9)', 'T(11)', 'T(12)','RECORD']  # Columns to exclude
+    for col in df.columns:
+        if col in exclude_cols:
+            continue  # Skip excluded columns
+        if df[col].isna().any() or (df[col] == 0).any():
+            error_rows = df[df[col].isna() | (df[col] == 0)]
+            for _, row in error_rows.iterrows():
+                errors.append({'column': col, 'timestamp': row['TIMESTAMP']})
+    return errors
 
-# errors = find_errors(df)
+errors = find_errors(df)
 
-# if errors:
-#     # Sort errors by timestamp (latest first)
-#     error_df = pd.DataFrame(errors)
-#     error_df = error_df.sort_values(by='timestamp', ascending=False)
+if errors:
+    # Sort errors by timestamp (latest first)
+    error_df = pd.DataFrame(errors)
+    error_df = error_df.sort_values(by='timestamp', ascending=False)
     
-#     st.write("### Columns with NaN or 0 Values:")
-#     st.dataframe(error_df)  # Display the errors in a dataframe
-# else:
-#     st.write("### No NaN or Zero Values detected.")
+    st.write("### Columns with NaN or 0 Values:")
+    st.dataframe(error_df)  # Display the errors in a dataframe
+else:
+    st.write("### No NaN or Zero Values detected.")
