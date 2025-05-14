@@ -160,7 +160,7 @@ options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Tempe
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
 
 if group_temp:
-    df_temp['group'] = df_temp.groupby[group_temp].agg(' - '.join, axis=1)
+    df_temp['group'] = df_temp[group_temp].agg(' - '.join, axis=1)
     df_temp_grouped = df_temp.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['Temperature'].mean()
     fig_temp = px.line(df_temp_grouped, x = "DateTime", y = "Temperature_(C)", color = 'group', Title = 'Soil Sensors')
     fig_temp.update_layout(xaxis_title = 'Time', yaxis_title = 'Temperature', height = 600)
