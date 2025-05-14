@@ -161,7 +161,7 @@ df_temp['Sensor_Position'] = split_cols[3]
 filter_options_temp = ['Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
 filter_temp = st.multiselect(label = "Remove temperature lines by:", options = filter_options_temp, key="temp_filter")
 
-df_temp = df_temp[~df_temp.isin(filter_vwc).any(axis=1)]
+df_temp = df_temp[~df_temp.isin(filter_temp).any(axis=1)]
 
 options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Temperature']]
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
