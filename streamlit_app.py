@@ -111,13 +111,45 @@ df_vwc = df2.melt(id_vars=["DateTime"],
                   var_name="Sensor",
                   value_name="VWC")
 
+
+# Add time-based group columns
+df_temp["Hour"] = df_temp["DateTime"].dt.hour
+df_temp["Day"] = df_temp["DateTime"].dt.date
+df_temp["Weekday"] = df_temp["DateTime"].dt.day_name()
+
+df_vwc["Hour"] = df_vwc["DateTime"].dt.hour
+df_vwc["Day"] = df_vwc["DateTime"].dt.date
+df_vwc["Weekday"] = df_vwc["DateTime"].dt.day_name()
+
+# Grouping options
+group_vars = st.multiselect(
+    "Group by columns:",
+    options=["Sensor", "Hour", "Day", "Weekday"],
+    default=["Sensor"]
+)
+
 # ——— Temperature Chart ———
-fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
+if group_vars:
+    df_temp_grouped = df_temp.groupby(group_vars)["Temperature"].mean().reset_index()
+    fig_temp = px.line(df_temp_grouped, x=group_vars[0], y="Temperature",
+                       color=group_vars[1] if len(group_vars) > 1 else None,
+                       title="Grouped Temperature Sensors")
+else:
+    fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
+
 fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=600)
 
 # ——— VWC Chart ———
-fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color="Sensor", title="Soil Moisture Sensors")
+if group_vars:
+    df_vwc_grouped = df_vwc.groupby(group_vars)["VWC"].mean().reset_index()
+    fig_vwc = px.line(df_vwc_grouped, x=group_vars[0], y="VWC",
+                      color=group_vars[1] if len(group_vars) > 1 else None,
+                      title="Grouped Soil Moisture Sensors")
+else:
+    fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color="Sensor", title="Soil Moisture Sensors")
+
 fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
+
 
 # 3. Error Log Section
 
@@ -236,3 +268,4 @@ if errors:
     st.dataframe(error_df)  # Display the errors in a dataframe
 else:
     st.write("### No NaN or Zero Values detected.")
+
