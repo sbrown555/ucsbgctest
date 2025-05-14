@@ -148,7 +148,7 @@ group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = op
 # st.pyplot(fig_vwc)
 
 if group_vwc:
-    df_vwc['group'] = df[group_vwc].agg(' - '.join, axis=1)
+    df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
     fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
 else:
@@ -232,9 +232,9 @@ with col2:
 #     st.plotly_chart(fig_group_temp, use_container_width=True)
 
 # ——— Interactive Grouping for VWC ———
-st.markdown("### 💧 Soil Moisture Sensors")
+# st.markdown("### 💧 Soil Moisture Sensors")
 
-st.plotly_chart(fig_vwc, use_container_width=True)
+# st.plotly_chart(fig_vwc, use_container_width=True)
 
 # group_vwc = st.multiselect("Group soil moisture lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)",'Species'], key="vwc_radio")
 # st.write(list(group_vwc))
