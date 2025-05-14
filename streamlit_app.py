@@ -162,7 +162,7 @@ group_temp = st.multiselect(label = "Group temperature lines by:", options = opt
 if group_temp:
     df_temp['group'] = df_temp[group_temp].agg(' - '.join, axis=1)
     df_temp_grouped = df_temp.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['Temperature'].mean()
-    fig_temp = px.line(df_temp_grouped, x = "DateTime", y = "Temperature", color = 'group', title = 'Soil Sensors')
+    fig_temp = px.line(df_temp_grouped, x = "DateTime", y = "Temperature", color = 'group', title = 'Soil Temperature Sensors')
     fig_temp.update_layout(xaxis_title = 'Time', yaxis_title = 'Temperature_(C)', height = 600)
     st.plotly_chart(fig_temp)
 else:
