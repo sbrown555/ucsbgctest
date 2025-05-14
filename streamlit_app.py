@@ -142,31 +142,6 @@ if group_vwc:
 else:
     print("Please select at least one column.")
 
-# fig_vwc, ax = plt.subplots(figsize=(10, 6))
-
-# # Plot each group
-# for group in group_vwc:
-#     ax.plot(df_vwc['DateTime'], df_vwc['VWC'], label=group)
-
-# # Customize
-# ax.set_title("VWC Over Time by Moisture and Level")
-# ax.set_xlabel("Date")
-# ax.set_ylabel("VWC")
-# ax.legend()
-
-# st.pyplot(fig_vwc)
-
-# if group_vwc:
-#     df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
-#     grouped = df_vwc.groupby(by = group_vwc, axis = 1, as_index = False, dropna = True)['VWC'].mean()
-#     fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
-#     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-# else:
-#     st.write("Please select at least one column.")
-
-# fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='moisture', title="Soil Moisture Sensors")
-# fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-
 # 3. Error Log Section
 
 def error_log(df, time_col='TIMESTAMP', threshold_min=40):
@@ -213,33 +188,33 @@ with col2:
 
 
 
-# ——— Display the Graphs After the Error and Download Sections ———
-# # ——— Interactive Grouping for Temperature ———
-# group_map = {
-#     "Position (Upper/Lower)": ["Upper", "Lower"],
-#     "Carbon Dioxide (HiC/LoC)": ["HiC", "LoC"],
-#     "Moisture (Wet/Dry)": ["Wet", "Dry"],
-#     "Species": ["PIPO", "QUCH", "QUWI", "PISA"]
-# }
+——— Display the Graphs After the Error and Download Sections ———
+# ——— Interactive Grouping for Temperature ———
+group_map = {
+    "Position (Upper/Lower)": ["Upper", "Lower"],
+    "Carbon Dioxide (HiC/LoC)": ["HiC", "LoC"],
+    "Moisture (Wet/Dry)": ["Wet", "Dry"],
+    "Species": ["PIPO", "QUCH", "QUWI", "PISA"]
+}
 
 
-# st.markdown("### 🌡️ Temperature Sensors")
+st.markdown("### 🌡️ Temperature Sensors")
 
-# group_temp = st.radio("Group temperature lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)", "Species"], key="temp_radio")
+group_temp = st.radio("Group temperature lines by:", ["None", "Position (Upper/Lower)", "Carbon Dioxide (HiC/LoC)", "Moisture (Wet/Dry)", "Species"], key="temp_radio")
 
-# if group_temp == "None":
-#     st.plotly_chart(fig_temp, use_container_width=True)
-# else:
-#     keywords = group_map[group_temp]
-#     temp_group_means = {}
-#     for keyword in keywords:
-#         filtered = df_temp[df_temp["Sensor"].str.contains(keyword, case=False)]
-#         temp_group_means[keyword] = filtered.groupby("DateTime")["Temperature"].mean()
-#     df_plot_temp = pd.DataFrame(temp_group_means).reset_index()
-#     fig_group_temp = px.line(df_plot_temp, x="DateTime", y=keywords,
-#                              title=f"Temperature — Averaged by {group_temp}")
-#     fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
-#     st.plotly_chart(fig_group_temp, use_container_width=True)
+if group_temp == "None":
+    st.plotly_chart(fig_temp, use_container_width=True)
+else:
+    keywords = group_map[group_temp]
+    temp_group_means = {}
+    for keyword in keywords:
+        filtered = df_temp[df_temp["Sensor"].str.contains(keyword, case=False)]
+        temp_group_means[keyword] = filtered.groupby("DateTime")["Temperature"].mean()
+    df_plot_temp = pd.DataFrame(temp_group_means).reset_index()
+    fig_group_temp = px.line(df_plot_temp, x="DateTime", y=keywords,
+                             title=f"Temperature — Averaged by {group_temp}")
+    fig_group_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=500)
+    st.plotly_chart(fig_group_temp, use_container_width=True)
 
 # # ——— Interactive Grouping for VWC ———
 # st.markdown("### 💧 Soil Moisture Sensors")
