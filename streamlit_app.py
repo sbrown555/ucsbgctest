@@ -114,6 +114,12 @@ fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", heig
 
 
 # ——— VWC Chart ———
+
+df_vwc = df2.melt(id_vars=["DateTime"],
+                  value_vars=vwc_cols,
+                  var_name="Sensor",
+                  value_name="VWC")
+
 # Split the Sensor column by space into separate parts
 split_cols = df_vwc['Sensor'].str.split(' ', expand=True)
 
@@ -124,10 +130,6 @@ df_vwc['level'] = split_cols[3]      # "Upper" or "Lower"
 
 options = ["None"] + list(df_vwc.columns)
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
-df_vwc = df2.melt(id_vars=["DateTime"],
-                  value_vars=vwc_cols,
-                  var_name="Sensor",
-                  value_name="VWC")
 
 
 fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color="Sensor", title="Soil Moisture Sensors")
