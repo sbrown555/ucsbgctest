@@ -25,8 +25,6 @@ for col in df.columns:
     if col != 'TIMESTAMP':
         df[col] = df[col].astype(float)
 
-
-
 # 2. Calibration
 def ToppEq(x):
     return (4.3e-6 * x**3 - 5.5e-4 * x**2 + 2.92e-2 * x - 5.3e-2)*100
@@ -101,26 +99,37 @@ df2 = df2[df2['DateTime'] > cutoff]
 temp_cols = [c for c in df2.columns if "Temp" in c]
 vwc_cols = [c for c in df2.columns if "VWC" in c]
 
+
+
+# ——— Temperature Chart ———
 df_temp = df2.melt(id_vars=["DateTime"],
                    value_vars=temp_cols,
                    var_name="Sensor",
                    value_name="Temperature")
 
+
+fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
+fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=600)
+
+
+
+# ——— VWC Chart ———
+# Split the Sensor column by space into separate parts
+split_cols = df_vwc['Sensor'].str.split(' ', expand=True)
+
+# Assign new columns
+df_vwc['C'] = split_cols[0]          # "HiC" or "LowC"
+df_vwc['moisture'] = split_cols[1]   # "Wet" or "Dry"
+df_vwc['level'] = split_cols[3]      # "Upper" or "Lower"
+
+options = ["None"] + list(df_vwc.columns)
+group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
 df_vwc = df2.melt(id_vars=["DateTime"],
                   value_vars=vwc_cols,
                   var_name="Sensor",
                   value_name="VWC")
 
-# ——— Temperature Chart ———
-fig_temp = px.line(df_temp, x="DateTime", y="Temperature", color="Sensor", title="Temperature Sensors")
-fig_temp.update_layout(xaxis_title="Time", yaxis_title="Temperature (°C)", height=600)
 
-options = ["None"] + list(df_vwc.columns)
-group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
-
-
-
-# ——— VWC Chart ———
 fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color="Sensor", title="Soil Moisture Sensors")
 fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
 
