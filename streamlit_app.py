@@ -154,7 +154,8 @@ df_temp = df2.melt(id_vars=["DateTime"],
 split_cols = df_temp['Sensor'].str.split(' ', expand = True)
 df_temp['CO2_Treatment'] = split_cols[0]
 df_temp['Moisture_Treatment'] = split_cols[1]
-df_temp['Sensor_Position'] = split_cols[2]
+df_temp['Species'] = split_cols[2]
+df_temp['Sensor_Position'] = split_cols[3]
 
 options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Temperature']]
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
@@ -180,6 +181,7 @@ df_vwc = df2.melt(id_vars=["DateTime"],
 split_cols = df_vwc['Sensor'].str.split(' ', expand=True)
 df_vwc['CO2_Treatment'] = split_cols[0]          
 df_vwc['Moisture_Treatment'] = split_cols[1]  
+df_vwc['Species'] = split_cols[2]
 df_vwc['Sensor_Position'] = split_cols[3]     
 
 options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
