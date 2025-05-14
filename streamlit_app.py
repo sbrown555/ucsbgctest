@@ -147,7 +147,7 @@ group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = op
 
 # st.pyplot(fig_vwc)
 
-if group_columns:
+if group_vwc:
     df_vwc['group'] = df[group_columns].agg(' - '.join, axis=1)
     fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
