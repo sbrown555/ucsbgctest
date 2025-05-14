@@ -133,6 +133,14 @@ options = list(df_vwc.columns)
 
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options, default = "Sensor", key="vwc_multiselect")
 
+if group_vwc:
+    df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
+    df_vwc_grouped = df_vwc.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['VWC'].mean()
+    fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
+    fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
+else:
+    print("Please select at least one column.")
+
 # fig_vwc, ax = plt.subplots(figsize=(10, 6))
 
 # # Plot each group
@@ -147,12 +155,13 @@ group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = op
 
 # st.pyplot(fig_vwc)
 
-if group_vwc:
-    df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
-    fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
-    fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-else:
-    st.write("Please select at least one column.")
+# if group_vwc:
+#     df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
+#     grouped = df_vwc.groupby(by = group_vwc, axis = 1, as_index = False, dropna = True)['VWC'].mean()
+#     fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
+#     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
+# else:
+#     st.write("Please select at least one column.")
 
 # fig_vwc = px.line(df_vwc, x="DateTime", y="VWC", color='moisture', title="Soil Moisture Sensors")
 # fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
