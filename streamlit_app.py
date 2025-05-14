@@ -156,7 +156,7 @@ df_temp['CO2_Treatment'] = split_cols[0]
 df_temp['Moisture_Treatment'] = split_cols[1]
 df_temp['Sensor_Position'] = split_cols[2]
 
-options_temp = list(df_temp.columns) - ['DateTime', 'Temperature']
+options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Temperature']]
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
 
 if group_temp:
@@ -182,7 +182,7 @@ df_vwc['CO2_Treatment'] = split_cols[0]
 df_vwc['Moisture_Treatment'] = split_cols[1]  
 df_vwc['Sensor_Position'] = split_cols[3]     
 
-options_vwc = list(df_vwc.columns) - ['DateTime', 'VWC']
+options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_multiselect")
 
 if group_vwc:
