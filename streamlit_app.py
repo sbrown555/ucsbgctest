@@ -164,6 +164,7 @@ if group_temp:
     df_temp_grouped = df_temp.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['Temperature'].mean()
     fig_temp = px.line(df_temp_grouped, x = "DateTime", y = "Temperature_(C)", color = 'group', Title = 'Soil Sensors')
     fig_temp.update_layout(xaxis_title = 'Time', yaxis_title = 'Temperature', height = 600)
+    st.plotly_chart(fig_temp)
 else:
     st.write('Please select at least one column.')
     
@@ -189,7 +190,7 @@ if group_vwc:
     df_vwc_grouped = df_vwc.groupby(by = ['DateTime', 'group'], axis = 0, as_index = False, dropna = True)['VWC'].mean()
     fig_vwc = px.line(df_vwc_grouped, x="DateTime", y="VWC", color='group', title="Soil Moisture Sensors")
     fig_vwc.update_layout(xaxis_title="Time", yaxis_title="Volumetric Water Content (%)", height=600)
-    # st.plotly_chart(fig_vwc)
+    st.plotly_chart(fig_vwc)
 else:
     st.write("Please select at least one column.")
 
