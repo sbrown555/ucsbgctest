@@ -190,10 +190,13 @@ df_vwc['Moisture_Treatment'] = split_cols[1]
 df_vwc['Species'] = split_cols[2]
 df_vwc['Sensor_Position'] = split_cols[3]     
 
-filter_options_vwc = ['Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_vwc = st.multiselect(label = "Remove soil moisture lines by:", options = filter_options_vwc, key="vwc_filter")
+filter_options_vwc = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
+filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = filter_options_vwc, default = 'All', key="vwc_filter")
 
-df_vwc = df_vwc[~df_vwc.isin(filter_vwc).any(axis=1)]
+if 'All' in filter_vwc:
+    filter_vwc = filter_options_vwc
+
+df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
 
 options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_grouping")
