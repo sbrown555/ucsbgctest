@@ -167,14 +167,21 @@ while add_graph:
   add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
   i = i+1
 
-
-max_diff = {}
+max_temps = {}
 for frame in dict_df.keys():
   dataframe = dict_df[frame]
-  diff = dataframe[yaxis].max() - df[yaxis].max()
-  max_diff[f"max_diff_{frame}"] = diff
+  max = dataframe[yaxis].max()
+  max_temps[frame] = max
 
-st.write(max_diff)
+
+
+# max_diff = {}
+# for frame in dict_df.keys():
+#   dataframe = dict_df[frame]
+#   diff = dataframe[yaxis].max() - df[yaxis].max()
+#   max_diff[f"max_diff_{frame}"] = diff
+
+# st.write(max_diff)
 
 
   
