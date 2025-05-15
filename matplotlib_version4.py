@@ -113,12 +113,12 @@ st.pyplot()
 
 add_graph = st.checkbox("Create additional graph?")
 
-
+dict_df = {}
 dict_df = {'df_0' : dataframe}
 i = 1
 
 while add_graph:
-  dict_df{f"df_{i}" : dataframe}
+  dict_df[f"df_{i}"] = dataframe
   long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i}")
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
@@ -167,10 +167,11 @@ while add_graph:
   add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
   i = i+1
 
+
 max_diff = {}
 for frame in dict_df.keys():
   diff = frame[yaxis].max() - df[yaxis].max
-  max_diff[f"max_diff_{i}"] = diff
+  max_diff[f"max_diff_{frame}"] = diff
 
 st.write(max_diff)
 
