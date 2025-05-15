@@ -111,7 +111,7 @@ yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable
 # # # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
 # # # plt.savefig(fig_name)
 
-add_graph = st.checkbox("Create additional graph?")
+add_graph = True
 
 dict_df = {}
 dict_df = {'df_0' : data}
