@@ -113,10 +113,12 @@ st.pyplot()
 
 add_graph = st.checkbox("Create additional graph?")
 
+
+dict_df = {'df_0' : dataframe}
 i = 1
 
 while add_graph:
-  df1 = dataframe
+  dict_df{f"df_{i}" : dataframe}
   long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i}")
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
@@ -165,6 +167,23 @@ while add_graph:
   add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
   i = i+1
 
+max_diff = {}
+for frame in dict_df.keys():
+  diff = frame[yaxis].max() - df[yaxis].max
+  max_diff[f"max_diff_{i}"] = diff
+
+st.write(max_diff)
+
+
+  
+# for frame in dict_df.keys():
+#   cols = [col for col in frame.columns if 'day_interval' in col]
+#   frame.groupby(['site', cols]).agg({col : 'max' for col in frame.columns if col not in ['site', cols]})
+#   diff = frame.groupby(['site', short
+#   diff_df{f"{frame} - original" : 
+  
+# df
+# # df1.groupby('day').agg({col : 'max'})
 
 
 # # Grouping and graphing all relevant variables based on either day of year or week of year and site
