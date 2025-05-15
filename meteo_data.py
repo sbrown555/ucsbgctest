@@ -5,9 +5,9 @@ import plotly.express as px
 import datetime as dt
 from io import StringIO
 
-# https://drive.google.com/file/d/1EGaJpuCmiFPibTBdEaT3rspsf6SpZqcX/view?usp=drive_link
+# https://drive.google.com/drive/u/0/folders/1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw
 
-file_id = '1EGaJpuCmiFPibTBdEaT3rspsf6SpZqcX'
+file_id = '1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw'
 download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 response = requests.get(download_url)
 
@@ -15,7 +15,7 @@ if response.status_code != 200:
     st.error("Failed to download file.")
     st.stop()
 
-content = StringIO(response.text)
+# content = StringIO(response.text)
 
 # contents = content.getvalue()
 # st.text(contents.split('\n')[19])
