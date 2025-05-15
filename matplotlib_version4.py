@@ -173,6 +173,8 @@ for frame in dict_df.keys():
   max = dataframe[yaxis].max()
   max_temps[frame] = max
 
+st.write(max_temps)
+
 
 
 # max_diff = {}
