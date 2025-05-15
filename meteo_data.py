@@ -116,7 +116,7 @@ df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'me
 # df_day is df_interval grouped by site, day of the year, and sub-daily interval in hours
 # df_week is df_day grouped by site, week of the year, and sub-daily interval in hours
 
-grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_the_year' = df_day, 'week_of_the_year' : df_week}
+grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_the_year' : df_day, 'week_of_the_year' : df_week}
 
 xaxis = st.multiselect(label = 'Choose grouping level:', options = grouping_dict.keys(), default = 'week_of_the_year')
 df_grouped = grouping_dict[xaxis]
