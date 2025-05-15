@@ -17,10 +17,10 @@ if response.status_code != 200:
 
 content = StringIO(response.text)
 
-contents = content.getvalue()
-st.text(contents.split('\n')[19])
+# contents = content.getvalue()
+# st.text(contents.split('\n')[19])
         
-# data=pd.read_csv(content, low_memory = False, index_col = 0)
+data=pd.read_csv(content, index_col = 0)
 
 # data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
 # for col in data.columns:
