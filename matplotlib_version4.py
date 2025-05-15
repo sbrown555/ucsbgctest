@@ -171,7 +171,7 @@ while add_graph:
 max_diff = {}
 for frame in dict_df.keys():
   dataframe = dict_df[frame]
-  diff = dataframe[yaxis].max() - df[yaxis].max
+  diff = dataframe[yaxis].max() - df[yaxis].max()
   max_diff[f"max_diff_{frame}"] = diff
 
 st.write(max_diff)
