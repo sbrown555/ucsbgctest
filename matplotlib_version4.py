@@ -83,18 +83,19 @@ variable_subset = variables
 # xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
 # dataframe = grouping_dict[xaxis]
 
-filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by time values?")
-
-slider_options = df['day_of_year'].unique().tolist()
-default_value = [x for x in slider_options if (x >= 6 and x<=42)]
-time_range = st.select_slider("Choose_da_of_year_range", options = slider_options, value = (slider_options[42], slider_options[6]))
-df = df[df['day_of_year'].isin(time_range)]
-
 filter_site = st.radio(label = 'Select which sites to graph:', options = ['sjer', 'soap', 'none'], value = 'none')
 
 if filter_site != 'none':
   df = df[df['site'] == filter_site]
 
+
+filter_time_choice = st.checkbox(label = "Would you like to choose values to filter by time values?")
+
+if filter_time_choice:
+  slider_options = df['day_of_year'].unique().tolist()
+  default_value = [x for x in slider_options if (x >= 6 and x<=42)]
+  time_range = st.select_slider("Choose_day_of_year_range", options = slider_options, value = (slider_options[6], slider_options[42]))
+  df = df[df['day_of_year'].isin(time_range)]
 
 # if filter_time_choice:
 #   slider_options = dataframe[xaxis].unique().tolist()
