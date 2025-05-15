@@ -125,19 +125,18 @@ st.pyplot()
 # Grouping and graphing all relevant variables based on either day of year or week of year and site
 variable_subset = variables
 indicator_subset = ['day_of_year', 'week_of_year']
-for yaxis in variable_subset:
-  for xaxis in indicator_subset:
-    dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
-    dataframe.reset_index(inplace = True)
-    plt.clf()
-    for site, group in dataframe.groupby("site"):
-      plt.plot(group[xaxis], group[yaxis], label = site)
-    plt.title(f"{yaxis}_avg")
-    plt.xlabel(xaxis)
-    plt.grid(True)
-    plt.legend(title='Site')
-    plt.tight_layout()
-    st.pyplot()
+
+dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
+dataframe.reset_index(inplace = True)
+plt.clf()
+for site, group in dataframe.groupby("site"):
+  plt.plot(group[xaxis], group[yaxis], label = site)
+plt.title(f"{yaxis}_avg")
+plt.xlabel(xaxis)
+plt.grid(True)
+plt.legend(title='Site')
+plt.tight_layout()
+st.pyplot()
 #     csv_name = f"{yaxis}_{xaxis}_14May25.png"
 #     plt.savefig(csv_name)
       
