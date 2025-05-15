@@ -7,23 +7,27 @@ from io import StringIO
 
 # https://drive.google.com/drive/u/0/folders/1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw
 
-file_id = '1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw'
-download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
-response = requests.get(download_url)
+url = 'https://raw.githubusercontent.com/sbrown555/ucsbgctest/refs/heads/main/small_data_14May25.csv'
 
-if response.status_code != 200:
-    st.error("Failed to download file.")
-    st.stop()
+data = pd.read_csv(url)
 
-content = StringIO(response.text)
-df = pd.read_csv(content)
+# file_id = '1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw'
+# download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+# response = requests.get(download_url)
+
+# if response.status_code != 200:
+#     st.error("Failed to download file.")
+#     st.stop()
+# ur
+# content = StringIO(response.text)
+# df = pd.read_csv(content)
 
 # content = StringIO(response.text)
 
 # contents = content.getvalue()
 # st.text(contents.split('\n')[19])
         
-data=pd.read_csv(content, index_col = 0)
+# data=pd.read_csv(content, index_col = 0)
 
 # data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
 # for col in data.columns:
