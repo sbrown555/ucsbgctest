@@ -7,7 +7,7 @@ from io import StringIO
 
 url = 'https://raw.githubusercontent.com/sbrown555/ucsbgctest/refs/heads/main/small_data_14May25.csv'
 
-data = pd.read_csv(url, index_col = 0)
+data = pd.read_csv(url, low_memory = False, index_col = 0)
 
 data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
 for col in data.columns:
@@ -15,17 +15,17 @@ for col in data.columns:
     data.loc[:,col] = pd.to_numeric(data.loc[:,col], errors="coerce")
 
 
-# # Renaming soil moistures to indicate depths.
+# Renaming soil moistures to indicate depths.
 
-# depth = ['10cm', '30cm', '60cm', '90cm']
-# data.rename(columns=lambda col: (f"soil_moisture_{depth[int(col.split('_')[1])-1]}_(m^3/m^3)" if 'moisture' in col else col), inplace=True)
+depth = ['10cm', '30cm', '60cm', '90cm']
+data.rename(columns=lambda col: (f"soil_moisture_{depth[int(col.split('_')[1])-1]}_(m^3/m^3)" if 'moisture' in col else col), inplace=True)
 
-# df = data
+df = data
 
-# indicator_columns = ['datetime', 'site']
-# default_variables = ['T_HMP_(C)', 'RH_(%)', 'PAR_IN_(umol_photons/m2/s)', 'soil_moisture_10cm_(m^3/m^3)','soil_moisture_30cm_(m^3/m^3)', 'soil_moisture_60cm_(m^3/m^3)', 'soil_moisture_90cm_(m^3/m^3)']
-# variable_options = ['All'] + [col for col in df.columns if col not in indicator_columns]
-# variables = st.multiselect(label = 'Choose variables:', options = variable_options, default = default_variables, key = 'variable_multiselect')
+indicator_columns = ['datetime', 'site']
+default_variables = ['T_HMP_(C)', 'RH_(%)', 'PAR_IN_(umol_photons/m2/s)', 'soil_moisture_10cm_(m^3/m^3)','soil_moisture_30cm_(m^3/m^3)', 'soil_moisture_60cm_(m^3/m^3)', 'soil_moisture_90cm_(m^3/m^3)']
+variable_options = ['All'] + [col for col in df.columns if col not in indicator_columns]
+variables = st.multiselect(label = 'Choose variables:', options = variable_options, default = default_variables, key = 'variable_multiselect')
 
 # if 'All' in variables:
 #   cols = df.columns
