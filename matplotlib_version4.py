@@ -25,7 +25,11 @@ df['date'] = df['datetime'].dt.strftime('%m/%d/%Y')
 df['date'] = pd.to_datetime(df['date'])
 df['hour'] = df['datetime'].dt.strftime('%H')
 df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
-df['week_of_year'] = df['day_of_year'] // 7
+
+long_int = st.text_input('Input a greater-than-daily interval in days')
+long_int = float(long_int)
+long_int_name = f"{long_int}_day_intervals_of_year"
+df[long_int_name] = df['day_of_year'] // long_int
 df['site']=df['site'].astype(str)
 
 # Add filtering by indicator columns
@@ -56,15 +60,15 @@ df_interval.reset_index(inplace = True)
 df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
 df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
 df_day.reset_index(inplace = True)
-df_day['week_of_year'] = df_day['day_of_year']//7
-df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'mean' for col in variables})
-df_week.reset_index(inplace = True)
+df_day[long_int_name] = df_day['day_of_year']//long_int
+df_long_int = df_day.groupby(['site', long_int_name, interval_name]).agg({ col : 'mean' for col in variables})
+df_long_int.reset_index(inplace = True)
 
-grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, 'week_of_year' : df_week}
+grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, long_int_name : df_long_int}
 
 
 # Grouping and graphing all relevant variables based on either day and interval or week and interval
-indicator_subset = ['day_of_year', 'week_of_year']
+indicator_subset = ['day_of_year', long_int_name]
 variable_subset = variables
 
 xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
@@ -124,7 +128,7 @@ st.pyplot()
 
 # Grouping and graphing all relevant variables based on either day of year or week of year and site
 variable_subset = variables
-indicator_subset = ['day_of_year', 'week_of_year']
+indicator_subset = ['day_of_year', long_int_name]
 
 dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
 dataframe.reset_index(inplace = True)
