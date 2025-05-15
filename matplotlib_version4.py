@@ -32,7 +32,7 @@ if long_int == '':
   st.warning("Input a suitable subdaily interval in hours")
   st.stop()
 else:
-  interval = float(long_int)
+  interval = int(long_int)
 
 # if long_int != '':
   # long_int = float(long_int)
