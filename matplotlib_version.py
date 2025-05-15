@@ -87,15 +87,16 @@ import matplotlib.pyplot as plt
 # interval = '4'
 interval = st.text_input("Input a subdaily interval in hours")
 
-if interval != '':
+if interval == '':
   st.warning("Input a suitable subdaily interval in hours")
   st.stop()
-elif interval >= 24:
+else:
+  interval = float(interval)
+
+if interval >= 24:
   st.warning("Input a suitable subdaily interval in hours")
   st.stop()
   
-  
-interval = int(interval)
 interval_name = f"{interval}_hour_interval"
 
 df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
