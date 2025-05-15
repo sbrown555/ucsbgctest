@@ -37,9 +37,9 @@ df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 # if long_int != '':
   # long_int = float(long_int)
 
-long_int_name = f"{long_int}_day_intervals_of_year"
-df[long_int_name] = df['day_of_year'] // long_int
-df['site']=df['site'].astype(str)
+# long_int_name = f"{long_int}_day_intervals_of_year"
+# df[long_int_name] = df['day_of_year'] // long_int
+# df['site']=df['site'].astype(str)
 
 # Add filtering by indicator columns
 
