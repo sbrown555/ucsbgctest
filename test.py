@@ -50,8 +50,8 @@ df = df[mask]
 
 # Add filtering by time
 
-time_start = st.text_input(label = 'Choose a datetime to start or leave blank', default = '')
-time_end = st.text_input(label = 'Choose a datetime to end or leave blank', default = '')
+time_start = st.text_input(label = 'Choose a datetime to start or leave blank')
+time_end = st.text_input(label = 'Choose a datetime to end or leave blank')
 # # time_start = ''
 # # time_end = ''
 
