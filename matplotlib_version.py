@@ -85,7 +85,16 @@ import matplotlib.pyplot as plt
 
 # input a subdaily interval in hours
 # interval = '4'
-interval = st.text_input("Input a subdaily interval in hour")
+interval = st.text_input("Input a subdaily interval in hours")
+
+if interval != '':
+  st.warning("Input a suitable subdaily interval in hours")
+  st.stop()
+elif interval >= 24:
+  st.warning("Input a suitable subdaily interval in hours")
+  st.stop()
+  
+  
 interval = int(interval)
 interval_name = f"{interval}_hour_interval"
 
