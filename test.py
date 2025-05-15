@@ -61,7 +61,6 @@ for var, val in filter_values.items():
   
 df = df[mask]
 
-
 # Add filtering by time
 
 # time_start = input(label = 'Choose a datetime to start or leave blank')
@@ -83,23 +82,13 @@ df = df[df['datetime'] >= time_start]
 df = df[df['datetime'] <= time_end]
 
 
-
-
-
-
-
-
-
-
-
-
 import matplotlib.pyplot as plt
 
 os.chdir("/Users/sean/Documents/Sean/Lara Research/Experimental Design/Meteorological data/SJER CZ1 and Soaproot CZ2 Sites")
 
 # input a subdaily interval in hours
 # interval = '4'
-st.input_text("Input a subdaily interval in hour")
+interval = st.input_text("Input a subdaily interval in hour")
 interval = int(interval)
 interval_name = f"{interval}_hour_interval"
 
@@ -168,20 +157,20 @@ st.pyplot()
 
 
 
-filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, default = 'site', key = 'filter_variables')
-st.write(filter_variables)
+# filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, default = 'site', key = 'filter_variables')
+# st.write(filter_variables)
 
-filter_values = {}
-if filter_variables != []:
-  for var in filter_variables:
-    value_options = list(set(df[var]))
-    filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, key = f"filter_values_{var}_mutliselect")
+# filter_values = {}
+# if filter_variables != []:
+#   for var in filter_variables:
+#     value_options = list(set(df[var]))
+#     filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, key = f"filter_values_{var}_mutliselect")
   
-# # filter_values = { 'site' : 'sjer', "week_of_year" : float("6")}
+# # # filter_values = { 'site' : 'sjer', "week_of_year" : float("6")}
 
-mask = pd.Series(True, index = df.index)
-for var, val in filter_values.items():
-  mask &= df[var] == val
+# mask = pd.Series(True, index = df.index)
+# for var, val in filter_values.items():
+#   mask &= df[var] == val
   
-df = df[mask]
+# df = df[mask]
 
