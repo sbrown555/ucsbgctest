@@ -127,7 +127,6 @@ while add_graph:
   df[long_int_name] = df['day_of_year'] // long_int
   interval_loop = st.text_input("Input a subdaily interval in hours", key = f"interval_{i}")
   interval = interval_loop
-  i = i+1
   if interval == '':
     st.warning("Input a suitable subdaily interval in hours")
     st.stop()
@@ -163,7 +162,8 @@ while add_graph:
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
-  add_graph = st.checkbox("Create additional graph?")
+  add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
+  i = i+1
 
 
 
