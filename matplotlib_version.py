@@ -20,8 +20,6 @@ df.columns = [col.replace("^","") for col in df.columns]
 df.columns = [col.replace("(","") for col in df.columns]
 df.columns = [col.replace(")","") for col in df.columns]
 
-df.columns
-
 # Adding date, week, day, and hour columns and making sure site is interpreted correctly
 df['date'] = df['datetime'].dt.strftime('%m/%d/%Y')
 df['date'] = pd.to_datetime(df['date'])
@@ -57,26 +55,6 @@ for var, val in filter_values.items():
   mask &= df[var] == val
   
 df = df[mask]
-
-# Add filtering by time
-
-# time_start = input(label = 'Choose a datetime to start or leave blank')
-# time_end = st.text_input(label = 'Choose a datetime to end or leave blank')
-time_start = ''
-time_end = ''
-
-if time_start == '':
-  time_start = df['datetime'].min()
-
-if time_end == '':
-  time_end = df['datetime'].max()
-
-print('Start time is ', time_start)
-print('End time is ', time_end)
-
-  
-df = df[df['datetime'] >= time_start]
-df = df[df['datetime'] <= time_end]
 
 
 import matplotlib.pyplot as plt
@@ -117,45 +95,75 @@ indicator_subset = ['day_of_year', 'week_of_year']
 variable_subset = variables
 
 xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
-yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
-
 dataframe = grouping_dict[xaxis]
-label = f"{xaxis}_and_{interval_name}"
-dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
-dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
-csv_name = label + '_15May2025.csv'
-# dataframe.to_csv(csv_name)
-plt.clf()
-for site, group in dataframe.groupby("site"):
-  plt.plot(group[label], group[yaxis], label = site)
-plt.title(yaxis)
-plt.xlabel(label)
-plt.grid(True)
-plt.legend(title='Site')
-plt.tight_layout()
-# plt.show()
-st.pyplot()
-# fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
-# plt.savefig(fig_name)
+
+filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by {xaxis} time values?")
+
+if filter_time_choice:
+  slider_options = dataframe[xaxis].aslist().unique()
+  st.select_slider(f"Choose_{xaxis}_range", options = slider_options)
 
 
-# Commented out below because already saved graphs and going to run again with different value for subdaily interval
-# # Grouping and graphing all relevant variables based on either day of year or week of year and site
-# variable_subset = variables
-# indicator_subset = ['day_of_year', 'week_of_year']
-# for yaxis in variable_subset:
-#   for xaxis in indicator_subset:
-#     dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
-#     dataframe.reset_index(inplace = True)
-#     plt.clf()
-#     for site, group in dataframe.groupby("site"):
-#       plt.plot(group[xaxis], group[yaxis], label = site)
-#     plt.title(yaxis)
-#     plt.xlabel(xaxis)
-#     plt.grid(True)
-#     plt.legend(title='Site')
-#     plt.tight_layout()
-#     plt.show()
-#     csv_name = f"{yaxis}_{xaxis}_14May25.png"
-#     plt.savefig(csv_name)
+  
+#   time_start = st.text_input('Enter the early value or leave blank for earliest value')
+#   time_end = st.text_input("Enter the late value of leave blank for latest value")
+#   if time_start == '':
+#       time_start = df['datetime'].min()
+#   if time_end == '':
+#     time_end = df['datetime'].max()
+#   print('Start time is ', time_start)
+#   print('End time is ', time_end)
+
+# dataframe = dataframe[dataframe[xaxis]
+# df = df[df[] >= time_start]
+# df = df[df['datetime'] <= time_end]
+
+
+
+
+# yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
+
+# dataframe = grouping_dict[xaxis]
+# label = f"{xaxis}_and_{interval_name}"
+# dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+# dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+# csv_name = label + '_15May2025.csv'
+# # dataframe.to_csv(csv_name)
+# plt.clf()
+# for site, group in dataframe.groupby("site"):
+#   plt.plot(group[label], group[yaxis], label = site)
+# plt.title(yaxis)
+# plt.xlabel(label)
+# plt.grid(True)
+# plt.legend(title='Site')
+# plt.tight_layout()
+# # plt.show()
+# st.pyplot()
+# # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
+# # plt.savefig(fig_name)
+
+# fig, ax = plt.subplots()
+# ax.scatter([1, 2, 3], [1, 2, 3])
+# # other plotting actions...
+# st.pyplot(fig)
+
+# # Commented out below because already saved graphs and going to run again with different value for subdaily interval
+# # # Grouping and graphing all relevant variables based on either day of year or week of year and site
+# # variable_subset = variables
+# # indicator_subset = ['day_of_year', 'week_of_year']
+# # for yaxis in variable_subset:
+# #   for xaxis in indicator_subset:
+# #     dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
+# #     dataframe.reset_index(inplace = True)
+# #     plt.clf()
+# #     for site, group in dataframe.groupby("site"):
+# #       plt.plot(group[xaxis], group[yaxis], label = site)
+# #     plt.title(yaxis)
+# #     plt.xlabel(xaxis)
+# #     plt.grid(True)
+# #     plt.legend(title='Site')
+# #     plt.tight_layout()
+# #     plt.show()
+# #     csv_name = f"{yaxis}_{xaxis}_14May25.png"
+# #     plt.savefig(csv_name)
       
