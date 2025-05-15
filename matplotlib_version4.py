@@ -78,7 +78,7 @@ import matplotlib.pyplot as plt
 
 # # Grouping and graphing all relevant variables based on either day and interval or week and interval
 # indicator_subset = ['day_of_year', long_int_name]
-# variable_subset = variables
+variable_subset = variables
 
 # xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
 # dataframe = grouping_dict[xaxis]
