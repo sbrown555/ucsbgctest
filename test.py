@@ -86,23 +86,23 @@ df_day['week_of_year'] = df_day['day_of_year']//7
 df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'mean' for col in variables})
 
 
-# # When graphing:
-# # df is the filtered data with only rows and columns selected through drop-down sheet (or default)
-# # df_interval is df grouped by site, date, and sub-daily interval in hours
-# # df_day is df_interval grouped by site, day of the year, and sub-daily interval in hours
-# # df_week is df_day grouped by site, week of the year, and sub-daily interval in hours
+# When graphing:
+# df is the filtered data with only rows and columns selected through drop-down sheet (or default)
+# df_interval is df grouped by site, date, and sub-daily interval in hours
+# df_day is df_interval grouped by site, day of the year, and sub-daily interval in hours
+# df_week is df_day grouped by site, week of the year, and sub-daily interval in hours
 
-# grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_the_year' : df_day, 'week_of_the_year' : df_week}
+grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_the_year' : df_day, 'week_of_the_year' : df_week}
 
-# xaxis = st.multiselect(label = 'Choose grouping level:', options = grouping_dict.keys(), default = 'week_of_the_year')
-# df_grouped = grouping_dict[xaxis]
+xaxis = st.multiselect(label = 'Choose grouping level:', options = grouping_dict.keys(), default = 'week_of_the_year')
+df_grouped = grouping_dict[xaxis]
 
-# yaxis = st.multiselect(label = 'Choose variable to graph:', options = variables, default = 'T_HMP_(C)')
+yaxis = st.multiselect(label = 'Choose variable to graph:', options = variables, default = 'T_HMP_(C)')
 
-# if grouping_level:
-#   fig = px.line(df_grouped, x = xaxis, y = yaxis, color = 'site')
-#   fig.update_layout(xaxis_title = 'Time', yaxis_title = yaxis, height = 600)
-#   st.plotly_chart(fig)
-# else:
-#   st.write('Please choose grouping level')
+if grouping_level:
+  fig = px.line(df_grouped, x = xaxis, y = yaxis, color = 'site')
+  fig.update_layout(xaxis_title = 'Time', yaxis_title = yaxis, height = 600)
+  st.plotly_chart(fig)
+else:
+  st.write('Please choose grouping level')
   
