@@ -41,17 +41,17 @@ if filter_variables != []:
   
 # # filter_values = { 'site' : 'sjer', "week_of_year" : float("6")}
 
-# mask = pd.Series(True, index = df.index)
-# for var, val in filter_values.items():
-#   mask &= df[var] == val
+mask = pd.Series(True, index = df.index)
+for var, val in filter_values.items():
+  mask &= df[var] == val
   
-# df = df[mask]
+df = df[mask]
 
 
-# # Add filtering by time
+# Add filtering by time
 
-# time_start = st.text_input(label = 'Choose a datetime to start or leave blank', default = '')
-# time_end = st.text_input(label = 'Choose a datetime to end or leave blank', default = '')
+time_start = st.text_input(label = 'Choose a datetime to start or leave blank', default = '')
+time_end = st.text_input(label = 'Choose a datetime to end or leave blank', default = '')
 # # time_start = ''
 # # time_end = ''
 
