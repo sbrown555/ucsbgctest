@@ -27,8 +27,16 @@ df['hour'] = df['datetime'].dt.strftime('%H')
 df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 
 long_int = st.text_input('Input a greater-than-daily interval in days')
-if long_int != '':
-  long_int = float(long_int)
+
+if long_int == '':
+  st.warning("Input a suitable subdaily interval in hours")
+  st.stop()
+else:
+  interval = float(long_int)
+
+# if long_int != '':
+  # long_int = float(long_int)
+
 long_int_name = f"{long_int}_day_intervals_of_year"
 df[long_int_name] = df['day_of_year'] // long_int
 df['site']=df['site'].astype(str)
