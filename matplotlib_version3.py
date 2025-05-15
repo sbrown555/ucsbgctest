@@ -77,6 +77,7 @@ if filter_time_choice:
   # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
   time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
   dataframe = dataframe[dataframe[xaxis].isin(time_range)]
+  
 
 
   
@@ -96,24 +97,23 @@ if filter_time_choice:
 
 
 
-# yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
+yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
 
-# dataframe = grouping_dict[xaxis]
-# label = f"{xaxis}_and_{interval_name}"
-# dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
-# dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+label = f"{xaxis}_and_{interval_name}"
+dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
 # csv_name = label + '_15May2025.csv'
 # # dataframe.to_csv(csv_name)
-# plt.clf()
-# for site, group in dataframe.groupby("site"):
-#   plt.plot(group[label], group[yaxis], label = site)
-# plt.title(yaxis)
-# plt.xlabel(label)
-# plt.grid(True)
-# plt.legend(title='Site')
-# plt.tight_layout()
-# # plt.show()
-# st.pyplot()
+plt.clf()
+for site, group in dataframe.groupby("site"):
+  plt.plot(group[label], group[yaxis], label = site)
+plt.title(yaxis)
+plt.xlabel(label)
+plt.grid(True)
+plt.legend(title='Site')
+plt.tight_layout()
+# plt.show()
+st.pyplot()
 # # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
 # # plt.savefig(fig_name)
 
