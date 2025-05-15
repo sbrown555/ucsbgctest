@@ -5,34 +5,14 @@ import plotly.express as px
 import datetime as dt
 from io import StringIO
 
-# https://drive.google.com/drive/u/0/folders/1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw
-
 url = 'https://raw.githubusercontent.com/sbrown555/ucsbgctest/refs/heads/main/small_data_14May25.csv'
 
-data = pd.read_csv(url)
+data = pd.read_csv(url, low_memory = False, index_col = 0)
 
-# file_id = '1vrfPAmU8Q_IOrASYsdDyLj8ptx2ZD8Iw'
-# download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
-# response = requests.get(download_url)
-
-# if response.status_code != 200:
-#     st.error("Failed to download file.")
-#     st.stop()
-# ur
-# content = StringIO(response.text)
-# df = pd.read_csv(content)
-
-# content = StringIO(response.text)
-
-# contents = content.getvalue()
-# st.text(contents.split('\n')[19])
-        
-# data=pd.read_csv(content, index_col = 0)
-
-# data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
-# for col in data.columns:
-#   if col not in ['datetime','site']:
-#     data.loc[:,col] = pd.to_numeric(data.loc[:,col], errors="coerce")
+data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
+for col in data.columns:
+  if col not in ['datetime','site']:
+    data.loc[:,col] = pd.to_numeric(data.loc[:,col], errors="coerce")
 
 
 # # Renaming soil moistures to indicate depths.
