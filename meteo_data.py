@@ -14,46 +14,27 @@ for col in data.columns:
   if col not in ['datetime','site']:
     data.loc[:,col] = pd.to_numeric(data.loc[:,col], errors="coerce")
 
-
-# Renaming soil moistures to indicate depths.
-
-depth = ['10cm', '30cm', '60cm', '90cm']
-data.rename(columns=lambda col: (f"soil_moisture_{depth[int(col.split('_')[1])-1]}_(m^3/m^3)" if 'moisture' in col else col), inplace=True)
-
 df = data
 
-indicator_columns = ['datetime', 'site']
-default_variables = ['T_HMP_(C)', 'RH_(%)', 'PAR_IN_(umol_photons/m2/s)', 'soil_moisture_10cm_(m^3/m^3)','soil_moisture_30cm_(m^3/m^3)', 'soil_moisture_60cm_(m^3/m^3)', 'soil_moisture_90cm_(m^3/m^3)']
-variable_options = ['All'] + [col for col in df.columns if col not in indicator_columns]
-variables = st.multiselect(label = 'Choose variables:', options = variable_options, default = default_variables, key = 'variable_multiselect')
+# Adding date, week, day, and hour columns and making sure site is interpreted correctly
+df['date'] = df['datetime'].dt.strftime('%m/%d/%Y')
+df['date'] = pd.to_datetime(df['date'])
+df['hour'] = df['datetime'].dt.strftime('%H')
+df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
+df['week_of_year'] = df['day_of_year'] // 7
+df['site']=df['site'].astype(str)
 
-# if 'All' in variables:
-#   cols = df.columns
-# else:
-#   cols = indicator_columns + variables
+# Add filtering by indicator columns
 
-# df = df.loc[:,cols]
+# Update indicator columns
+indicator_columns = [col for col in df.columns if col not in variables]
 
-# #Adding date, week, day, and hour columns and making sure site is interpreted correctly
-# df['date'] = df['datetime'].dt.strftime('%m/%d/%Y')
-# df['date'] = pd.to_datetime(df['date'])
-# df['hour'] = df['datetime'].dt.strftime('%H')
-# df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
-# df['week_of_year'] = df['day_of_year'] // 7
-# df['site']=df['site'].astype(str)
+filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, default = 'none', key = 'filter_variables')
 
-
-# # Add filtering by indicator columns
-
-# # Update indicator columns
-# indicator_columns = [col for col in df.columns if col not in variables]
-
-# filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, default = 'none', key = 'filter_variables')
-
-# filter_values = {}
-# for var in filter_variables:
-#   value_options = list(set(df[var]))
-#   filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, default = 'none', key = f"filter_values_{var}_mutliselect")
+filter_values = {}
+for var in filter_variables:
+  value_options = list(set(df[var]))
+  filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, default = 'none', key = f"filter_values_{var}_mutliselect")
   
 # # filter_values = { 'site' : 'sjer', "week_of_year" : float("6")}
 
