@@ -7,7 +7,7 @@ from io import StringIO
 
 url = 'https://raw.githubusercontent.com/sbrown555/ucsbgctest/refs/heads/main/small_data_14May25.csv'
 
-data = pd.read_csv(url, low_memory = False, index_col = 0)
+data = pd.read_csv(url, index_col = 0)
 
 data['datetime'] = pd.to_datetime(data['datetime'], errors = 'coerce')
 for col in data.columns:
