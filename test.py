@@ -94,10 +94,10 @@ df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'me
 
 grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_the_year' : df_day, 'week_of_the_year' : df_week}
 
-xaxis = st.selectbox(label = 'Choose grouping level:', options = list(grouping_dict.keys()), default = 'week_of_the_year')
+xaxis = st.selectbox(label = 'Choose grouping level:', options = list(grouping_dict.keys()))
 df_grouped = grouping_dict[xaxis]
 
-yaxis = st.selectbox(label = 'Choose variable to graph:', options = variables, default = 'T_HMP_(C)')
+yaxis = st.radio(label = 'Choose variable to graph:', options = variables)
 
 if grouping_level:
   fig = px.line(df_grouped, x = xaxis, y = yaxis, color = 'site')
