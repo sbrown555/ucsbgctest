@@ -27,6 +27,7 @@ df['site']=df['site'].astype(str)
 # Add filtering by indicator columns
 
 # Update indicator columns
+variables = ['T_HMP_(C)', 'RH_(%)', 'PAR_IN_(umol_photons/m2/s)', 'soil_moisture_10cm_(m^3/m^3)','soil_moisture_30cm_(m^3/m^3)', 'soil_moisture_60cm_(m^3/m^3)', 'soil_moisture_90cm_(m^3/m^3)']
 indicator_columns = [col for col in df.columns if col not in variables]
 
 filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, default = 'none', key = 'filter_variables')
