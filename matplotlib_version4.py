@@ -26,7 +26,7 @@ df['date'] = pd.to_datetime(df['date'])
 df['hour'] = df['datetime'].dt.strftime('%H')
 df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 
-long_int = st.text_input('Input a greater-than-daily interval in days')
+# long_int = st.text_input('Input a greater-than-daily interval in days')
 
 # if long_int == '':
 #   st.warning("Input a suitable subdaily interval in hours")
@@ -49,17 +49,17 @@ indicator_columns = [col for col in df.columns if col not in variables]
 
 import matplotlib.pyplot as plt
 
-interval = st.text_input("Input a subdaily interval in hours")
+# interval = st.text_input("Input a subdaily interval in hours")
 
-if interval == '':
-  st.warning("Input a suitable subdaily interval in hours")
-  st.stop()
-else:
-  interval = float(interval)
+# if interval == '':
+#   st.warning("Input a suitable subdaily interval in hours")
+#   st.stop()
+# else:
+#   interval = float(interval)
 
-if interval >= 24:
-  st.warning("Input a suitable subdaily interval in hours")
-  st.stop()
+# if interval >= 24:
+#   st.warning("Input a suitable subdaily interval in hours")
+#   st.stop()
   
 # interval_name = f"{interval}_hour_interval"
 
