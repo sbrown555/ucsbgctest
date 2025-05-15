@@ -15,6 +15,10 @@ if response.status_code != 200:
     st.error("Failed to download file.")
     st.stop()
 
+content = StringIO(response.text)
+df = pd.read_csv(content, skiprows=1).iloc[2:]
+df['TIMESTAMP'] = pd.to_datetime(df['TIMESTAMP'])
+
 # content = StringIO(response.text)
 
 # contents = content.getvalue()
