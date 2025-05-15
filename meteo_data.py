@@ -33,9 +33,10 @@ indicator_columns = [col for col in df.columns if col not in variables]
 filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, key = 'filter_variables')
 
 filter_values = {}
-for var in filter_variables:
-  value_options = list(set(df[var]))
-  filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, default = 'none', key = f"filter_values_{var}_mutliselect")
+if filter_variables != []:
+  for var in filter_variables:
+    value_options = list(set(df[var]))
+    filter_values[var] = st.multiselect(label = f"Choose values to filter {var} by:", options = value_options, default = 'none', key = f"filter_values_{var}_mutliselect")
   
 # # filter_values = { 'site' : 'sjer', "week_of_year" : float("6")}
 
