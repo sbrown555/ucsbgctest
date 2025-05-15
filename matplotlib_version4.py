@@ -28,11 +28,11 @@ df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 
 long_int = st.text_input('Input a greater-than-daily interval in days')
 
-if long_int == '':
-  st.warning("Input a suitable subdaily interval in hours")
-  st.stop()
-else:
-  long_int = int(long_int)
+# if long_int == '':
+#   st.warning("Input a suitable subdaily interval in hours")
+#   st.stop()
+# else:
+#   long_int = int(long_int)
 
 # if long_int != '':
   # long_int = float(long_int)
@@ -61,55 +61,55 @@ if interval >= 24:
   st.warning("Input a suitable subdaily interval in hours")
   st.stop()
   
-interval_name = f"{interval}_hour_interval"
+# interval_name = f"{interval}_hour_interval"
 
-df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
-df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
-df_interval.reset_index(inplace = True)
-df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
-df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
-df_day.reset_index(inplace = True)
-df_day[long_int_name] = df_day['day_of_year']//long_int
-df_long_int = df_day.groupby(['site', long_int_name, interval_name]).agg({ col : 'mean' for col in variables})
-df_long_int.reset_index(inplace = True)
+# df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
+# df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
+# df_interval.reset_index(inplace = True)
+# df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
+# df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
+# df_day.reset_index(inplace = True)
+# df_day[long_int_name] = df_day['day_of_year']//long_int
+# df_long_int = df_day.groupby(['site', long_int_name, interval_name]).agg({ col : 'mean' for col in variables})
+# df_long_int.reset_index(inplace = True)
 
-grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, long_int_name : df_long_int}
+# grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, long_int_name : df_long_int}
 
 
-# Grouping and graphing all relevant variables based on either day and interval or week and interval
-indicator_subset = ['day_of_year', long_int_name]
-variable_subset = variables
+# # Grouping and graphing all relevant variables based on either day and interval or week and interval
+# indicator_subset = ['day_of_year', long_int_name]
+# variable_subset = variables
 
-xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
-dataframe = grouping_dict[xaxis]
+# xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
+# dataframe = grouping_dict[xaxis]
 
-filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by {xaxis} time values?")
+# filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by {xaxis} time values?")
 
-if filter_time_choice:
-  slider_options = dataframe[xaxis].unique().tolist()
-  # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
-  time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[42], slider_options[6]))
-  dataframe = dataframe[dataframe[xaxis].isin(time_range)]
+# if filter_time_choice:
+#   slider_options = dataframe[xaxis].unique().tolist()
+#   # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
+#   time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[42], slider_options[6]))
+#   dataframe = dataframe[dataframe[xaxis].isin(time_range)]
 
-yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
+# yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
 
-label = f"{xaxis}_and_{interval_name}"
-dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
-dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
-# csv_name = label + '_15May2025.csv'
-# # dataframe.to_csv(csv_name)
-plt.clf()
-for site, group in dataframe.groupby("site"):
-  plt.plot(group[label], group[yaxis], label = site)
-plt.title(yaxis)
-plt.xlabel(label)
-plt.grid(True)
-plt.legend(title='Site')
-plt.tight_layout()
-# plt.show()
-st.pyplot()
-# # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
-# # plt.savefig(fig_name)
+# label = f"{xaxis}_and_{interval_name}"
+# dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+# dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+# # csv_name = label + '_15May2025.csv'
+# # # dataframe.to_csv(csv_name)
+# plt.clf()
+# for site, group in dataframe.groupby("site"):
+#   plt.plot(group[label], group[yaxis], label = site)
+# plt.title(yaxis)
+# plt.xlabel(label)
+# plt.grid(True)
+# plt.legend(title='Site')
+# plt.tight_layout()
+# # plt.show()
+# st.pyplot()
+# # # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
+# # # plt.savefig(fig_name)
 
 add_graph = st.checkbox("Create additional graph?")
 
@@ -118,7 +118,6 @@ dict_df = {'df_0' : data}
 i = 1
 
 while add_graph:
-  dict_df[f"df_{long_int}"] = dataframe
   long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i}")
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
@@ -164,6 +163,7 @@ while add_graph:
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
+  dict_df[f"df_{long_int}"] = dataframe
   add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
   i = i+1
 
