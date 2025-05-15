@@ -180,7 +180,7 @@ while add_graph:
 
 max_temps = {}
 for frame in dict_df.keys():
-  dataframe = dict_df[f"{frame}_max]
+  dataframe = dict_df[f"{frame}_max"]
   max = dataframe[yaxis].max()
   max_temps[frame] = max
 
