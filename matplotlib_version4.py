@@ -149,6 +149,7 @@ while add_graph:
   grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, long_int_name : df_long_int}
   indicator_subset = ['day_of_year', long_int_name]
   variable_subset = variables
+  xaxis = long_int_name
   dataframe = grouping_dict[xaxis]
   label = f"{xaxis}_and_{interval_name}"
   dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
