@@ -55,35 +55,35 @@ time_end = st.text_input(label = 'Choose a datetime to end or leave blank')
 # # time_start = ''
 # # time_end = ''
 
-# if time_start == '':
-#   time_start = df['datetime'].min()
+if time_start == '':
+  time_start = df['datetime'].min()
 
-# if time_end == '':
-#   time_end = df['datetime'].max()
+if time_end == '':
+  time_end = df['datetime'].max()
 
-# st.write('Start time is ', time_start)
-# st.write('End time is ', time_end)
+st.write('Start time is ', time_start)
+st.write('End time is ', time_end)
 
   
-# df = df[df['datetime'] >= time_start]
-# df = df[df['datetime'] <= time_end]
+df = df[df['datetime'] >= time_start]
+df = df[df['datetime'] <= time_end]
 
 
-# # Grouping
+# Grouping
 
-# interval = st.text_input(label = 'Provide a subdaily intervals in hours:', value = '1')
-# interval = int(interval)
-# interval_name = f"{interval}_hour_interval"
+interval = st.text_input(label = 'Provide a subdaily intervals in hours:', value = '1')
+interval = int(interval)
+interval_name = f"{interval}_hour_interval"
 
-# df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
+df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
 
-# df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
-# df_interval.reset_index(inplace = True)
-# df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
-# df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
-# df_day.reset_index(inplace = True)
-# df_day['week_of_year'] = df_day['day_of_year']//7
-# df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'mean' for col in variables})
+df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
+df_interval.reset_index(inplace = True)
+df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
+df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
+df_day.reset_index(inplace = True)
+df_day['week_of_year'] = df_day['day_of_year']//7
+df_week = df_day.groupby(['site', 'week_of_year', interval_name]).agg({col : 'mean' for col in variables})
 
 
 # # When graphing:
