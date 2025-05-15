@@ -91,7 +91,7 @@ import matplotlib.pyplot as plt
 #   time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[42], slider_options[6]))
 #   dataframe = dataframe[dataframe[xaxis].isin(time_range)]
 
-# yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
+yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
 
 # label = f"{xaxis}_and_{interval_name}"
 # dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
