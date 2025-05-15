@@ -83,7 +83,18 @@ variable_subset = variables
 # xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
 # dataframe = grouping_dict[xaxis]
 
-# filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by {xaxis} time values?")
+filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by time values?")
+
+slider_options = df['day_of_year'].unique().tolist()
+default_value = [x for x in slider_options if (x >= 6 and x<=42)]
+time_range = st.select_slider("Choose_da_of_year_range", options = slider_options, value = (slider_options[42], slider_options[6]))
+df = df[df['day_of_year'].isin(time_range)]
+
+filter_site = st.radio(label = 'Select which sites to graph:', options = ['sjer', 'soap', 'none'], value = 'none')
+
+if filter_site != 'none':
+  df = df[df['site'] == filter_site]
+
 
 # if filter_time_choice:
 #   slider_options = dataframe[xaxis].unique().tolist()
@@ -169,7 +180,7 @@ while add_graph:
 
 max_temps = {}
 for frame in dict_df.keys():
-  dataframe = dict_df[frame]
+  dataframe = dict_df[f"{frame}_max]
   max = dataframe[yaxis].max()
   max_temps[frame] = max
 
@@ -177,7 +188,7 @@ st.write(max_temps)
 
 min_temps = {}
 for frame in dict_df.keys():
-  dataframe = dict_df[frame]
+  dataframe = dict_df[f"{frame}_min"]
   min = dataframe[yaxis].min()
   min_temps[frame] = min
 
