@@ -113,9 +113,12 @@ st.pyplot()
 
 add_graph = st.checkbox("Create additional graph?")
 
+i = 1
+
 while add_graph:
   df1 = dataframe
-  long_int = st.text_input('Input a greater-than-daily interval in days')
+  long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i)")
+  i = i+1
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
     st.stop()
