@@ -18,7 +18,7 @@ if response.status_code != 200:
 content = StringIO(response.text)
 
 contents = stringio.getvalue()
-st.text(contents.split('\n')[19]
+st.text(contents.split('\n')[19])
         
 # data=pd.read_csv(content, low_memory = False, index_col = 0)
 
