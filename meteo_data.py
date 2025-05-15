@@ -31,6 +31,8 @@ variables = ['T_HMP_(C)', 'RH_(%)', 'PAR_IN_(umol_photons/m2/s)', 'soil_moisture
 indicator_columns = [col for col in df.columns if col not in variables]
 
 filter_variables = st.multiselect(label = "Choose variables to filter by:", options = indicator_columns, key = 'filter_variables')
+st.write(indicator_columns)
+st.write(filter_variables)
 
 filter_values = {}
 if filter_variables != []:
