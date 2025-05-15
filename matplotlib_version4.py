@@ -27,7 +27,8 @@ df['hour'] = df['datetime'].dt.strftime('%H')
 df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 
 long_int = st.text_input('Input a greater-than-daily interval in days')
-long_int = float(long_int)
+if long_int != '':
+  long_int = float(long_int)
 long_int_name = f"{long_int}_day_intervals_of_year"
 df[long_int_name] = df['day_of_year'] // long_int
 df['site']=df['site'].astype(str)
@@ -81,25 +82,6 @@ if filter_time_choice:
   # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
   time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[42], slider_options[6]))
   dataframe = dataframe[dataframe[xaxis].isin(time_range)]
-  
-
-
-  
-#   time_start = st.text_input('Enter the early value or leave blank for earliest value')
-#   time_end = st.text_input("Enter the late value of leave blank for latest value")
-#   if time_start == '':
-#       time_start = df['datetime'].min()
-#   if time_end == '':
-#     time_end = df['datetime'].max()
-#   print('Start time is ', time_start)
-#   print('End time is ', time_end)
-
-# dataframe = dataframe[dataframe[xaxis]
-# df = df[df[] >= time_start]
-# df = df[df['datetime'] <= time_end]
-
-
-
 
 yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
 
@@ -121,26 +103,69 @@ st.pyplot()
 # # fig_name = f"{yaxis}_{xaxis}_{interval_name}_14May25.png"
 # # plt.savefig(fig_name)
 
-# fig, ax = plt.subplots()
-# ax.scatter([1, 2, 3], [1, 2, 3])
-# # other plotting actions...
-# st.pyplot(fig)
+add_graph = st.checkbox("Create additional graph?")
 
-# Grouping and graphing all relevant variables based on either day of year or week of year and site
-variable_subset = variables
-indicator_subset = ['day_of_year', long_int_name]
+while add_graph:
+  df1 = dataframe
+  long_int = st.text_input('Input a greater-than-daily interval in days')
+    if long_int != '':
+    long_int = float(long_int)
+  long_int_name = f"{long_int}_day_intervals_of_year"
+  df[long_int_name] = df['day_of_year'] // long_int
+  interval = st.text_input("Input a subdaily interval in hours")
+  if interval == '':
+    st.warning("Input a suitable subdaily interval in hours")
+    st.stop()
+  else:
+    interval = float(interval)
+  if interval >= 24:
+    st.warning("Input a suitable subdaily interval in hours")
+    st.stop()
+  interval_name = f"{interval}_hour_interval"
+  df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
+  df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
+  df_interval.reset_index(inplace = True)
+  df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
+  df_day = df_interval.groupby(['site', 'day_of_year', interval_name]).agg({col : 'mean' for col in variables})
+  df_day.reset_index(inplace = True)
+  df_day[long_int_name] = df_day['day_of_year']//long_int
+  df_long_int = df_day.groupby(['site', long_int_name, interval_name]).agg({ col : 'mean' for col in variables})
+  df_long_int.reset_index(inplace = True)
+  grouping_dict = {'datetime' : df, interval_name : df_interval, 'day_of_year' : df_day, long_int_name : df_long_int}
+  indicator_subset = ['day_of_year', long_int_name]
+  variable_subset = variables
+  dataframe = grouping_dict[xaxis]
+  label = f"{xaxis}_and_{interval_name}"
+  dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+  dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+  plt.clf()
+  for site, group in dataframe.groupby("site"):
+    plt.plot(group[label], group[yaxis], label = site)
+  plt.title(yaxis)
+  plt.xlabel(label)
+  plt.grid(True)
+  plt.legend(title='Site')
+  plt.tight_layout()
+  st.pyplot()
+  add_graph = st.checkbox("Create additional graph?")
 
-dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
-dataframe.reset_index(inplace = True)
-plt.clf()
-for site, group in dataframe.groupby("site"):
-  plt.plot(group[xaxis], group[yaxis], label = site)
-plt.title(f"{yaxis}_avg")
-plt.xlabel(xaxis)
-plt.grid(True)
-plt.legend(title='Site')
-plt.tight_layout()
-st.pyplot()
-#     csv_name = f"{yaxis}_{xaxis}_14May25.png"
-#     plt.savefig(csv_name)
+
+
+# # Grouping and graphing all relevant variables based on either day of year or week of year and site
+# variable_subset = variables
+# indicator_subset = ['day_of_year', long_int_name]
+
+# dataframe = grouping_dict[xaxis].groupby([xaxis, 'site']).agg({col : 'mean' for col in variable_subset})
+# dataframe.reset_index(inplace = True)
+# plt.clf()
+# for site, group in dataframe.groupby("site"):
+#   plt.plot(group[xaxis], group[yaxis], label = site)
+# plt.title(f"{yaxis}_avg")
+# plt.xlabel(xaxis)
+# plt.grid(True)
+# plt.legend(title='Site')
+# plt.tight_layout()
+# st.pyplot()
+# #     csv_name = f"{yaxis}_{xaxis}_14May25.png"
+# #     plt.savefig(csv_name)
       
