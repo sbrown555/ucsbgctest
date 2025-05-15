@@ -175,6 +175,13 @@ for frame in dict_df.keys():
 
 st.write(max_temps)
 
+min_temps = {}
+for frame in dict_df.keys():
+  dataframe = dict_df[frame]
+  min = dataframe[yaxis].min()
+  min_temps[frame] = min
+
+st.write(min_temps)
 
 
 # max_diff = {}
