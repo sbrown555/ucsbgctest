@@ -75,7 +75,8 @@ filter_time_choice = st.checkbox(label = f"Would you like to choose values to fi
 if filter_time_choice:
   slider_options = dataframe[xaxis].unique().tolist()
   # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
-  st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
+  time_range = st.select_slider(f"Choose_{xaxis}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
+  dataframe = dataframe[dataframe[xaxis] in time_range]
 
 
   
