@@ -116,8 +116,11 @@ add_graph = st.checkbox("Create additional graph?")
 while add_graph:
   df1 = dataframe
   long_int = st.text_input('Input a greater-than-daily interval in days')
-  if long_int != '':
-    long_int = float(long_int)
+  if long_int == '':
+    st.warning("Input a suitable subdaily interval in hours")
+    st.stop()
+  else:
+    long_int = int(long_int)
   long_int_name = f"{long_int}_day_intervals_of_year"
   df[long_int_name] = df['day_of_year'] // long_int
   interval = st.text_input("Input a subdaily interval in hours")
