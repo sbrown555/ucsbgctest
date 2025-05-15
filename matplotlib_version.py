@@ -81,7 +81,7 @@ df = df[df['datetime'] <= time_end]
 
 import matplotlib.pyplot as plt
 
-os.chdir("/Users/sean/Documents/Sean/Lara Research/Experimental Design/Meteorological data/SJER CZ1 and Soaproot CZ2 Sites")
+# os.chdir("/Users/sean/Documents/Sean/Lara Research/Experimental Design/Meteorological data/SJER CZ1 and Soaproot CZ2 Sites")
 
 # input a subdaily interval in hours
 # interval = '4'
@@ -114,7 +114,7 @@ label = f"{xaxis}_and_{interval_name}"
 dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
 dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
 csv_name = label + '_15May2025.csv'
-dataframe.to_csv(csv_name)
+# dataframe.to_csv(csv_name)
 plt.clf()
 for site, group in dataframe.groupby("site"):
   plt.plot(group[label], group[yaxis], label = site)
