@@ -118,7 +118,7 @@ dict_df = {'df_0' : dataframe}
 i = 1
 
 while add_graph:
-  dict_df[f"df_{int_long}"] = dataframe
+  dict_df[f"df_{long_int}"] = dataframe
   long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i}")
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
