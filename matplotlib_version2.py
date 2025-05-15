@@ -73,7 +73,7 @@ dataframe = grouping_dict[xaxis]
 filter_time_choice = st.checkbox(label = f"Would you like to choose values to filter by {xaxis} time values?")
 
 if filter_time_choice:
-  slider_options = dataframe[xaxis].aslist().unique()
+  slider_options = dataframe[xaxis].unique().tolist()
   st.select_slider(f"Choose_{xaxis}_range", options = slider_options)
 
 
