@@ -114,7 +114,7 @@ st.pyplot()
 add_graph = st.checkbox("Create additional graph?")
 
 dict_df = {}
-dict_df = {'df_0' : dataframe}
+dict_df = {'df_0' : data}
 i = 1
 
 while add_graph:
