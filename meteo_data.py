@@ -16,8 +16,7 @@ if response.status_code != 200:
     st.stop()
 
 content = StringIO(response.text)
-df = pd.read_csv(content, skiprows=1).iloc[2:]
-df['TIMESTAMP'] = pd.to_datetime(df['TIMESTAMP'])
+df = pd.read_csv(content)
 
 # content = StringIO(response.text)
 
