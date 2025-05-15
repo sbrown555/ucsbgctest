@@ -99,7 +99,7 @@ df_grouped = grouping_dict[xaxis]
 
 yaxis = st.radio(label = 'Choose variable to graph:', options = variables)
 
-if grouping_level:
+if xaxis:
   fig = px.line(df_grouped, x = xaxis, y = yaxis, color = 'site')
   fig.update_layout(xaxis_title = 'Time', yaxis_title = yaxis, height = 600)
   st.plotly_chart(fig)
