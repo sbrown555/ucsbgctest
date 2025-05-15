@@ -117,7 +117,7 @@ indicator_subset = ['day_of_year', 'week_of_year']
 variable_subset = variables
 
 xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
-yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_susbet)
+yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable_subset)
 
 dataframe = grouping_dict[xaxis]
 label = f"{xaxis}_and_{interval_name}"
