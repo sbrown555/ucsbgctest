@@ -189,9 +189,9 @@ st.write(max_temps)
 
 min_temps = {}
 for frame in dict_df.keys():
-  dataframe = dict_df[f"{frame}_min"]
+  dataframe = dict_df[frame]
   min = dataframe[yaxis].min()
-  min_temps[frame] = min
+  min_temps[f"{frame}_min"] = min
 
 st.write(min_temps)
 
