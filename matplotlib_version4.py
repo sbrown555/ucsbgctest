@@ -126,7 +126,7 @@ yaxis = st.selectbox(label = "Choose a dependent variable: ", options = variable
 add_graph = True
 
 dict_df = {}
-dict_df = {'df_0' : data}
+dict_df = {'df_0' : df}
 i = 1
 
 while add_graph:
