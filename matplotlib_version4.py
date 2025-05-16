@@ -139,7 +139,7 @@ while add_graph:
     st.stop()
   else:
     interval = float(interval)
-  if interval >= 24:
+  if interval > 24:
     st.warning("Input a suitable subdaily interval in hours")
     st.stop()
   interval_name = f"{interval}_hour_interval"
