@@ -96,7 +96,7 @@ if filter_time_choice:
   st.write(slider_options)
   default_value = [x for x in slider_options if (x >= 6 and x<=42)]
   time_range = st.select_slider("Choose_day_of_year_range", options = slider_options, value = (slider_options[6], slider_options[42]))
-  df = df[df['day_of_year'].isin(time_range)]
+  df = df[~df['day_of_year'].isin(time_range)]
 
 # if filter_time_choice:
 #   slider_options = dataframe[xaxis].unique().tolist()
