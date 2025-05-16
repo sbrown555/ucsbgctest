@@ -148,7 +148,7 @@ while add_graph:
   if filter_time_choice:
     slider_options = list(set(df[interval_name].unique().tolist()))
     st.write(slider_options)
-    # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
+    default_value = [x for x in slider_options if (x >= 6 and x<=42)]
     time_range = st.select_slider(f"Choose_{interval_name}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
   df = df[~df['day_of_year'].isin(time_range)]
   df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
