@@ -179,7 +179,7 @@ while add_graph:
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
-  dict_df[f"df_{long_int}"] = dataframe
+  dict_df[f"df_{long_int}>{interval}"] = dataframe
   add_graph = st.checkbox("Create additional graph?", key = f"checkbox_{i}")
   i = i+1
 
