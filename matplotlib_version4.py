@@ -146,11 +146,11 @@ while add_graph:
   df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
   filter_time_choice = st.checkbox(label = "Would you like to choose values to filter by time values?")
   if filter_time_choice:
-    slider_options = list(set(df[interval_name].unique().tolist()))
+    slider_options = list(set(df[long_int_name].unique().tolist()))
     st.write(slider_options)
     default_value = [x for x in slider_options if (x >= 6 and x<=42)]
-    time_range = st.select_slider(f"Choose_{interval_name}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
-    df = df[~df[interval_name].isin(time_range)]
+    time_range = st.select_slider(f"Choose_{long_int_name}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
+    df = df[~df[long_int_name].isin(time_range)]
   df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
   df_interval.reset_index(inplace = True)
   df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
