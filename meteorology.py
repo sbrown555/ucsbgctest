@@ -44,6 +44,7 @@ dict_df = {'df_0' : df}
 i = 1
 
 while add_graph:
+  df = dict_df['df_0']
   long_int = st.text_input('Input a greater-than-daily interval in days', key = f"long_int_{i}")
   if long_int == '':
     st.warning("Input a suitable subdaily interval in hours")
@@ -70,7 +71,6 @@ while add_graph:
     slider_options = [int(x) for x in slider_options]
     slider_min = min(slider_options)
     slider_max = max(slider_options)
-    st.write(slider_options)
     start, end = st.slider(f"Choose_{long_int_name}_range", min_value = slider_min, max_value = slider_max, value = (slider_min, slider_max))
     df = df[(df[long_int_name] >= start) & (df[long_int_name] <= end)]
   df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
