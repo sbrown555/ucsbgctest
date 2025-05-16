@@ -83,9 +83,9 @@ variable_subset = variables
 # xaxis = st.selectbox(label = "Choose an independent variable: ", options = indicator_subset)
 # dataframe = grouping_dict[xaxis]
 
-filter_site = st.radio(label = 'Select which sites to graph:', options = ['sjer', 'soap', 'none'], index = 2)
+filter_site = st.radio(label = 'Select which sites to graph:', options = ['sjer', 'soap', 'both'], index = 2)
 
-if filter_site != 'none':
+if filter_site != 'both':
   df = df[df['site'] == filter_site]
 
 
