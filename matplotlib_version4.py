@@ -149,9 +149,9 @@ while add_graph:
     slider_options = list(set(df[long_int_name].unique().tolist()))
     slider_options = [int(x) for x in slider_options]
     st.write(slider_options)
-    default_value = [x for x in slider_options if (x >= 6 and x<=42)]
-    time_range = st.slider(f"Choose_{long_int_name}_range", min_value = min(slider_options), max_value = max(slider_options), value = (slider_options[6], slider_options[42]))
-    df = df[~df[long_int_name].isin(time_range)]
+    # default_value = [x for x in slider_options if (x >= 6 and x<=42)]
+    start, end = st.slider(f"Choose_{long_int_name}_range", min_value = min(slider_options), max_value = max(slider_options), value = (slider_options[6], slider_options[42]))
+    df = df[(df[long_int_name] >= start) & (df[long_int_name] <= end)]
   df_interval = df.groupby(['site', 'date', interval_name]).agg({col : 'mean' for col in variables})
   df_interval.reset_index(inplace = True)
   df_interval['day_of_year'] = (df_interval['date'].dt.strftime('%j').astype(int) - 1)
