@@ -144,7 +144,7 @@ while add_graph:
     st.stop()
   interval_name = f"{interval}_hour_interval"
   df[interval_name] = df['datetime'].apply(lambda x: (float(x.hour//interval)))
-  filter_time_choice = st.checkbox(label = "Would you like to choose values to filter by time values?")
+  filter_time_choice = st.checkbox(label = "Would you like to choose values to filter by time values?", key = f'filter_time_{i}')
   if filter_time_choice:
     slider_options = list(set(df[long_int_name].unique().tolist()))
     slider_options = [int(x) for x in slider_options]
