@@ -147,6 +147,7 @@ while add_graph:
   filter_time_choice = st.checkbox(label = "Would you like to choose values to filter by time values?")
   if filter_time_choice:
     slider_options = list(set(df[long_int_name].unique().tolist()))
+    slider_options = [int(x) for x in slider_options]
     st.write(slider_options)
     default_value = [x for x in slider_options if (x >= 6 and x<=42)]
     time_range = st.select_slider(f"Choose_{long_int_name}_range", options = slider_options, value = (slider_options[6], slider_options[42]))
