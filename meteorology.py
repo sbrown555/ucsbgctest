@@ -130,7 +130,7 @@ for name in dict_df.keys():
 for name in dict_df.keys():
   frame = dict_df[name]
   if ">" in name:
-    interval_short = name.split('<')[1].strip()
+    interval_short = name.split('>')[1].strip()
     interval_short = int(iterval_short)
     if interval_short == 1:
       df_1 = frame
