@@ -118,7 +118,7 @@ for frame in dict_df.keys():
 
 st.write(min_temps)
 
-st.write('updated')
+# st.write('updated')
 
 dict_csv = {}
 for name in dict_df.keys():
