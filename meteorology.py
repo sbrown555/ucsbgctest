@@ -127,6 +127,7 @@ for name in dict_df.keys():
   frame = frame.to_csv(index = False)
   st.download_button(label = f"download_{name}", data = frame, file_name = f"{name}.csv", mime='text/csv')
 
+dict_redundant = {}
 for name in dict_df.keys():
   frame = dict_df[name]
   if ">" in name:
