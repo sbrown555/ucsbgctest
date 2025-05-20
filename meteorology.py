@@ -141,7 +141,7 @@ for name in dict_df.keys():
       frame[interval_name] = frame[interval_name]*interval_short
       for i in range(num_copies):
         copy = frame
-        copy[interval_name] = copy[interval_name]  25
+        copy[interval_name] = copy[interval_name] + 25
         frame_test = len(list(set(frame[interval_name].to_list())))
         copy_test = len(list(set(copy[interval_name].to_list())))
         frame = pd.concat([frame, copy], ignore_index = True)
