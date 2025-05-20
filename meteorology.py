@@ -143,7 +143,9 @@ for name in dict_df.keys():
         copy = frame
         copy[interval_name] = copy[interval_name] + 25
         frame_test = len(list(set(frame[interval_name].to_list())))
+        st.write(frame_test)
         copy_test = len(list(set(copy[interval_name].to_list())))
+        st.write(copy_test)
         frame = pd.concat([frame, copy], ignore_index = True)
         dict_redundant[name] = frame
         test = len(list(set(frame[interval_name].to_list())))
@@ -160,7 +162,7 @@ for name in dict_redundant.keys():
   frame = frame.to_csv(index = False)
   st.download_button(label = f'difference_dataframe_{name}', data = frame, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 
-st.write('updated')
+# st.write('updated')
 
 
 
