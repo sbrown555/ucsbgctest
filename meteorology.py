@@ -144,7 +144,7 @@ for name in dict_df.keys():
         copy[interval_name] = copy[interval_name] + i + 25
         frame = pd.concat([frame, copy], ignore_index = True)
         dict_redundant[name] = frame
-        test = list(set(frame[interval_name].to_list()))
+        test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
       frame = frame.to_csv(index = False)
       st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
