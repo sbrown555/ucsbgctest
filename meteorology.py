@@ -138,6 +138,7 @@ for name in dict_df.keys():
       df_1 = frame
     elif interval_short > 1:
       num_copies = interval_short - 1
+      frame[interval_name] = frame[interval_name]*interval_short
       for i in range(num_copies):
         copy = frame
         copy[interval_name] = copy[interval_name] + i + 1
