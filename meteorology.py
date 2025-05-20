@@ -117,3 +117,59 @@ for frame in dict_df.keys():
   min_temps[f"{frame}_min"] = min
 
 st.write(min_temps)
+
+dict_csv = {}
+for name in dict_df.keys():
+  frame = dict_df[name]
+  # dict_csv[f"{name}_csv"] = frame.to_csv(index=False)
+  st.download_button(label = f"download_{name}", data = frame, file_name = f"{name}.csv", mime='text/csv')
+
+for name in dict_df.keys():
+  frame = dict_df[name]
+  if ">" in name:
+    interval_short = frame.split('<')[1].strip()
+    interval_short = int(iterval_short)
+    if interval_short == 1:
+      df_1 = frame
+    elif interval_short > 1:
+      num_copies = interval_short - 1
+      for i in range(num_copies):
+        copy = frame
+        copy[interval_name] = copy[interval_name] + i + 1
+        frame = pd.concat(frame, copy, ignore_index = True)
+        dict_redundant[name] = frame
+      st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
+      
+dict_diff = {}
+for name in dict_redundant.keys():
+  frame = dict_redundant[name]
+  for col in variables:
+    frame[col] = frame[col] - df_1[col]
+  dict_diff[name] = frame
+  st.download_button(label = f'difference_dataframe_{name}', data = frame, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
+
+
+
+
+      
+# dict_diff = {}
+# for n
+
+# for name in dict_interval:
+#   interval_short = int(dict_interval[name])
+#   if interval_short > 1:
+#     copies = interval_short - 1
+#     copy = dict_df[name
+    
+
+# dict_interval = {}
+# for name in dict_df.keys():
+#   frame = dict_df[name]
+#   if ">" in name:
+#     dict_interval[name] = frame.split('<')[1].strip()
+
+# for name in dict_interval:
+#   interval_short = int(dict_interval[name])
+#   if interval_short > 1:
+#     copies = interval_short - 1
+#     copy = dict_df[name
