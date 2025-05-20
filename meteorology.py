@@ -124,6 +124,7 @@ dict_csv = {}
 for name in dict_df.keys():
   frame = dict_df[name]
   # dict_csv[f"{name}_csv"] = frame.to_csv(index=False)
+  frame = frame.to_csv(index = False)
   st.download_button(label = f"download_{name}", data = frame, file_name = f"{name}.csv", mime='text/csv')
 
 for name in dict_df.keys():
@@ -140,7 +141,7 @@ for name in dict_df.keys():
         copy[interval_name] = copy[interval_name] + i + 1
         frame = pd.concat(frame, copy, ignore_index = True)
         dict_redundant[name] = frame
-      st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
+      # st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
       
 dict_diff = {}
 for name in dict_redundant.keys():
@@ -148,7 +149,7 @@ for name in dict_redundant.keys():
   for col in variables:
     frame[col] = frame[col] - df_1[col]
   dict_diff[name] = frame
-  st.download_button(label = f'difference_dataframe_{name}', data = frame, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
+  # st.download_button(label = f'difference_dataframe_{name}', data = frame, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 
 
 
