@@ -240,13 +240,23 @@ for name in dict_diff.keys():
   #   plt.plot(group[xaxis], group[yaxis], label = site)
   for site, group in dataframe.groupby("site"):
     plt.plot(group[xaxis], group[yaxis], label = site)
-  plt.title(f"Difference 2 hour - 1 hour intervals in {yaxis} - hourly resolution")
+  title = f"Difference 2 hour - 1 hour intervals in {yaxis} - hourly resolution"
+  # plt.title(f"Difference 2 hour - 1 hour intervals in {yaxis} - hourly resolution")
+  plt.title(title)
   plt.ylabel(yaxis)
   plt.xlabel("Week and hour fraction")
   plt.grid(True)
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
+  buf = BytesIO()
+  plt.savefig(buf, format="png")
+  buf.seek(0)
+  st.download_button(
+    label=f"Download {title} plot as PNG",
+    data=buf,
+    file_name=f"{title}.png",
+    mime="image/png")
   # sites = dataframe['site'].unique()
   # fig, axes = plt.subplots(nrows=len(sites), ncols=1, figsize=(8, 4 * len(sites)), sharex=True)
   # if len(sites) == 1:
@@ -279,7 +289,7 @@ for name in dict_diff.keys():
   plt.savefig(buf, format="png")
   buf.seek(0)
   st.download_button(
-    label="Download {title} plot as PNG",
+    label=f"Download {title} plot as PNG",
     data=buf,
     file_name=f"{title}.png",
     mime="image/png")
