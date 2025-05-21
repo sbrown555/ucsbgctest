@@ -164,8 +164,8 @@ filter_temp = st.multiselect(label = "Filter temperature lines by:", options = f
 
 if 'All' in filter_temp:
     filter_temp = filter_options_temp
-else:
-    filter_temp = [x for x in filter_temp if x != 'All']
+
+filter_temp = [x for x in filter_temp if x != 'All']
 
 for term in filter_temp:
     df_temp = df_temp[df_temp.isin([term]).any(axis=1)]
@@ -202,8 +202,8 @@ filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = 
 
 if 'All' in filter_vwc:
     filter_vwc = filter_options_vwc
-else:
-    filter_vwc = [x for x in filter_vwc if x != 'All']
+
+filter_vwc = [x for x in filter_vwc if x != 'All']
 
 for term in filter_vwc:
     df_vwc = df_vwc[df_vwc.isin([term]).any(axis=1)]
