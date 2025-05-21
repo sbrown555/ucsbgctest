@@ -123,8 +123,8 @@ st.write(min_temps)
 dict_csv = {}
 for name in dict_df.keys():
   frame = dict_df[name]
-  # dict_csv[f"{name}_csv"] = frame.to_csv()
-  frame = frame.to_csv(index = False)
+  # dict_csv[f"{name}_csv"] = frame.to_csv(index = True)
+  frame = frame.to_csv(index = True)
   st.download_button(label = f"download_{name}", data = frame, file_name = f"{name}.csv", mime='text/csv')
 
 dict_redundant = {}
@@ -169,7 +169,7 @@ for name in dict_df.keys():
         test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
         frame.set_index(['site', long_int_name, interval_name], inplace=True)
-        csv_data = frame.to_csv(index = False)
+        csv_data = frame.to_csv(index = True)
         st.download_button(label = 'redundant dataframe', data = csv_data, file_name = 'redundant.csv', mime = 'text/csv')
         dict_redundant[name] = frame
       else:
@@ -185,7 +185,7 @@ for name in dict_redundant.keys():
   for col in variables:
     frame[col] = frame[col] - df_1[col]
   dict_diff[name] = frame
-  frame = frame.to_csv()
+  frame = frame.to_csv(index=True)
   st.download_button(label = f'difference_dataframe_{name}', data = frame, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 
 # st.write('updated agian')
