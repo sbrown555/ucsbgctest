@@ -186,12 +186,21 @@ if not df_1.empty:
 else:
   st.warning('for comparison of dataframes include a short time interval of 1 and make sure long intervals are the same')
 
+
+  dataframe = grouping_dict[xaxis]
+  label = f"{xaxis}_and_{interval_name}"
+  dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+  dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+
+
 # Create graphs for comparison of dataframes with different time intervals
 for name in dict_diff.keys():
   st.write(name)
   dataframe = dict_diff[name]
-  xaxis = dataframe.columns[-1]
-  label = xaxis
+  label = f"{dataframe.columns[1]}_and_{dataframe.columns[2]}"
+  dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+  dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+  xaxis = label
   yaxis = 'T_HMP_C'
   plt.clf()
   for site, group in dataframe.groupby("site"):
