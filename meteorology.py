@@ -134,7 +134,7 @@ for name in dict_df.keys():
   for col in frame.columns:
     if 'day' in col:
       long_int_list.append(col)
-  if len(set(long_int_list) != 1:
+  if len(set(long_int_list)) != 1:
     st.write('All greater than daily intervals should be the same length for comparison')
 
   
