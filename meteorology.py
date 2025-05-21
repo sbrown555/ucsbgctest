@@ -160,7 +160,6 @@ for name in dict_df.keys():
       if list_copies:
         frame = pd.concat(list_copies, ignore_index = True)
         test = len(list(set(frame[interval_name].to_list())))
-        # st.write(test)
         frame.set_index(['site', long_int_name, interval_name], inplace=True)
         csv_data = frame.to_csv(index = True)
         st.download_button(label = 'redundant dataframe', data = csv_data, file_name = 'redundant.csv', mime = 'text/csv')
@@ -178,6 +177,7 @@ if not df_1.empty:
   # st.write(df_1)
   for name in dict_redundant.keys():
     frame = dict_redundant[name]
+    new_frame = df_1.copy
     for col in variables:
       new_frame[col] = frame[col] - df_1[col]
     label = f"{long_int_name}_and_{interval_name}"
@@ -189,10 +189,10 @@ else:
   st.warning('for comparison of dataframes include a short time interval of 1 and make sure long intervals are the same')
 
 
-  dataframe = grouping_dict[xaxis]
-  label = f"{xaxis}_and_{interval_name}"
-  dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
-  dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
+  # dataframe = grouping_dict[xaxis]
+  # label = f"{xaxis}_and_{interval_name}"
+  # dataframe[label] = dataframe[xaxis] + interval*dataframe[interval_name]/24
+  # dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
 
 
 # Create graphs for comparison of dataframes with different time intervals
