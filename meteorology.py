@@ -169,7 +169,7 @@ for name in dict_df.keys():
         st.warning(f"No frames to concatenate for {name}")
         continue
 
-if df_1:
+if not df_1.empty:
   dict_diff = {}
   df_1.reset_index(inplace=True)
   df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
