@@ -188,6 +188,7 @@ else:
 
 # Create graphs for comparison of dataframes with different time intervals
 for name in dict_diff.keys():
+  st.write(name)
   dataframe = dict_diff[name]
   xaxis = dataframe.columns[-1]
   label = xaxis
