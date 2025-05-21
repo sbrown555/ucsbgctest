@@ -199,8 +199,8 @@ df_vwc['Moisture_Treatment'] = split_cols[1]
 df_vwc['Species'] = split_cols[2]
 df_vwc['Sensor_Position'] = split_cols[3]     
 
-filter_options_vwc = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = filter_options_vwc, default = 'All', key="vwc_filter")
+filter_options_vwc = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
+filter_vwc = st.multiselect(label = "Select rows that contain all of", options = filter_options_vwc, default = 'All sensors', key="vwc_filter")
 
 filter_vwc = [x for x in filter_vwc if x != 'All sensors']
 
