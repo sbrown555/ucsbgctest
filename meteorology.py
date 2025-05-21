@@ -263,7 +263,7 @@ for name in dict_diff.keys():
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
   plt.title(yaxis)
-  plt.xlabel(label)
+  plt.xlabel(xaxis)
   plt.grid(True)
   plt.legend(title='Site')
   plt.tight_layout()
