@@ -182,8 +182,9 @@ if not df_1.empty:
       new_frame[col] = frame[col] - df_1[col]
     label = f"{long_int_name}_and_1.0_hour_interval"
     new_frame[label] = df_1[label]
-    dict_diff[name] = frame
-    csv_data = frame.to_csv(index=True)
+    name_diff = f"{name}_diff"
+    dict_diff[name] = new_frame
+    csv_data = new_frame.to_csv(index=True)
     st.download_button(label = f'difference_dataframe_{name}', data = csv_data, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 else:
   st.warning('for comparison of dataframes include a short time interval of 1 and make sure long intervals are the same')
