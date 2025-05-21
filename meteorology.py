@@ -178,7 +178,7 @@ for name in dict_df.keys():
         
 # st.write(dict_redundant.keys())
 dict_diff = {}
-df_1.set_index(['site', long_int_name, interval_name], inplace=True)
+df_1.set_index(['site', long_int_name, '1.0_hour_interval'], inplace=True)
 st.write(df_1)
 for name in dict_redundant.keys():
   frame = dict_redundant[name].copy()
