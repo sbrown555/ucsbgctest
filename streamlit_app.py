@@ -197,7 +197,8 @@ filter_options_vwc = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUC
 filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = filter_options_vwc, default = 'All', key="vwc_filter")
 
 if 'All' in filter_vwc:
-    filter_vwc = filter_options_vwc
+    # filter_vwc = filter_options_vwc
+    filter_vwc = []
 
 df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
 
