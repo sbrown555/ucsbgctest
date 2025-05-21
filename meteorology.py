@@ -145,13 +145,13 @@ for name in dict_df.keys():
   if ">" in name:
     interval_short = name.split('>')[1].strip()
     interval_short = int(float(interval_short))
-    st.write(f"interval_short = {interval_short}")
+    # st.write(f"interval_short = {interval_short}")
     if interval_short == 1:
       df_1 = frame
     elif interval_short > 1:
       num_copies = interval_short - 1
       frame[interval_name] = frame[interval_name]*interval_short
-      st.write(frame)
+      # st.write(frame)
       list_copies = [frame]
       for i in range(num_copies):
         copy = frame.copy()
@@ -160,7 +160,7 @@ for name in dict_df.keys():
       if list_copies:
         frame = pd.concat(list_copies, ignore_index = True)
         test = len(list(set(frame[interval_name].to_list())))
-        st.write(test)
+        # st.write(test)
         frame.set_index(['site', long_int_name, interval_name], inplace=True)
         csv_data = frame.to_csv(index = True)
         st.download_button(label = 'redundant dataframe', data = csv_data, file_name = 'redundant.csv', mime = 'text/csv')
@@ -173,9 +173,9 @@ if not df_1.empty:
   dict_diff = {}
   df_1.reset_index(inplace=True)
   df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
-  st.write(df_1.columns)
+  # st.write(df_1.columns)
   df_1.set_index(['site', long_int_name, interval_name], inplace=True)
-  st.write(df_1)
+  # st.write(df_1)
   for name in dict_redundant.keys():
     frame = dict_redundant[name].copy()
     for col in variables:
