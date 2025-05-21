@@ -133,14 +133,15 @@ for name in dict_df.keys():
   if ">" in name:
     interval_short = name.split('>')[1].strip()
     interval_short = int(float(interval_short))
+    st.write(f"interval_short = {interval_short}")
     if interval_short == 1:
       df_1 = frame
     elif interval_short > 1:
       num_copies = interval_short - 1
-      st.write(f"num_copies = {num_copies}")
+      # st.write(f"num_copies = {num_copies}")
       frame[interval_name] = frame[interval_name]*interval_short
-      st.write(frame)
-      st.write(dict_df[name])
+      # st.write(frame)
+      # st.write(dict_df[name])
       list_copies = [frame]
       for i in range(num_copies):
         st.write(i)
