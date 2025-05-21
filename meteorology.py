@@ -143,7 +143,7 @@ for name in dict_df.keys():
       for i in range(num_copies):
         st.write(i)
         copy = frame
-        copy[interval_name] = copy[interval_name] + 25
+        copy[interval_name] = copy[interval_name] + 1
         st.write(f"copy column names  = {copy.columns}")
         st.write(copy)
         st.write(f"frame column names  = {frame.columns}")
