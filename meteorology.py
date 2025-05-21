@@ -140,26 +140,26 @@ for name in dict_df.keys():
       num_copies = interval_short - 1
       # st.write(f"num_copies = {num_copies}")
       frame[interval_name] = frame[interval_name]*interval_short
-      # st.write(frame)
+      st.write(frame)
       # st.write(dict_df[name])
       list_copies = [frame]
       for i in range(num_copies):
-        st.write(i)
+        # st.write(i)
         copy = frame.copy()
         copy[interval_name] = copy[interval_name] + 1
-        st.write(f"copy column names  = {copy.columns}")
-        st.write(copy)
-        st.write(f"frame column names  = {frame.columns}")
-        st.write(dict_df[name])
+        # st.write(f"copy column names  = {copy.columns}")
+        # st.write(copy)
+        # st.write(f"frame column names  = {frame.columns}")
+        # st.write(dict_df[name])
         # copy.set_index(interval_name, inplace = True)
         # frame.set_index(interval_name, inplace = True)
-        frame_test = len(list(set(frame[interval_name].to_list())))
-        st.write(frame_test)
-        copy_test = len(list(set(copy[interval_name].to_list())))
-        st.write(copy_test)
+        # frame_test = len(list(set(frame[interval_name].to_list())))
+        # st.write(frame_test)
+        # copy_test = len(list(set(copy[interval_name].to_list())))
+        # st.write(copy_test)
         # frame = pd.concat([frame, copy], ignore_index = True)
         list_copies = list_copies.append(copy)
-        test = len(list(set(frame[interval_name].to_list())))
+        # test = len(list(set(frame[interval_name].to_list())))
         st.write(list_copies)
       st.write(list_copies)
       if list_copies:
