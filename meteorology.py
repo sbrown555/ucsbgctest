@@ -178,6 +178,7 @@ for name in dict_df.keys():
         
 st.write(dict_redundant.keys())
 dict_diff = {}
+df_1.set_index(['site', interval_name], inplace=True)
 for name in dict_redundant.keys():
   frame = dict_redundant[name].copy()
   for col in variables:
