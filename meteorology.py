@@ -28,6 +28,7 @@ df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 # Update indicator columns
 variables = ['T_HMP_C', 'RH_%', 'PAR_IN_umol_photons.m2.s', 'soil_moisture_10cm_m3.m3', 'soil_moisture_30cm_m3.m3','soil_moisture_60cm_m3.m3', 'soil_moisture_90cm_m3.m3']
 indicator_columns = [col for col in df.columns if col not in variables]
+df['RH_%'] = df['RH_%]*100
 variable_subset = variables
 
 filter_site = st.radio(label = 'Select which sites to graph:', options = ['sjer', 'soap', 'both'], index = 2)
