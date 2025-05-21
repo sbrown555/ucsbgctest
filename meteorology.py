@@ -128,6 +128,17 @@ for name in dict_df.keys():
 # Create dataframes with differences between dataframes using different time intervals
 st.write('Comparison of dataframes with different subdaily time intervals')
 
+long_int_list = []
+for name in dict_df.keys():
+  frame = dict_df[name]
+  for col in frame.columns:
+    if 'day' in col:
+      long_int_list.append(col)
+  if len(set(long_int_list) != 1:
+    st.write('All greater than daily intervals should be the same length for comparison')
+
+  
+
 dict_redundant = {}
 for name in dict_df.keys():
   frame = dict_df[name]
@@ -157,20 +168,22 @@ for name in dict_df.keys():
       else:
         st.warning(f"No frames to concatenate for {name}")
         continue
-        
-dict_diff = {}
-df_1.reset_index(inplace=True)
-df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
-st.write(df_1.columns)
-df_1.set_index(['site', long_int_name, interval_name], inplace=True)
-st.write(df_1)
-for name in dict_redundant.keys():
-  frame = dict_redundant[name].copy()
-  for col in variables:
-    frame[col] = frame[col] - df_1[col]
-  dict_diff[name] = frame
-  csv_data = frame.to_csv(index=True)
-  st.download_button(label = f'difference_dataframe_{name}', data = csv_data, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 
+if df_1:
+  dict_diff = {}
+  df_1.reset_index(inplace=True)
+  df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
+  st.write(df_1.columns)
+  df_1.set_index(['site', long_int_name, interval_name], inplace=True)
+  st.write(df_1)
+  for name in dict_redundant.keys():
+    frame = dict_redundant[name].copy()
+    for col in variables:
+      frame[col] = frame[col] - df_1[col]
+    dict_diff[name] = frame
+    csv_data = frame.to_csv(index=True)
+    st.download_button(label = f'difference_dataframe_{name}', data = csv_data, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
+else:
+  st.warning('for comparison of dataframes include a short time interval of 1 and make sure long intervals are the same')
 
 # Create graphs for comparison of dataframes with different time intervals
