@@ -168,7 +168,7 @@ for name in dict_df.keys():
         # dict_redundant[name] = frame
         test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
-        frame.set_index(['site', interval_name], inplace=True)
+        frame.set_index(['site', long_int_name, interval_name], inplace=True)
         csv_data = frame.to_csv(index = False)
         st.download_button(label = 'redundant dataframe', data = csv_data, file_name = 'redundant.csv', mime = 'text/csv')
         dict_redundant[name] = frame
@@ -176,9 +176,10 @@ for name in dict_df.keys():
         st.warning(f"No frames to concatenate for {name}")
         continue
         
-st.write(dict_redundant.keys())
+# st.write(dict_redundant.keys())
 dict_diff = {}
-df_1.set_index(['site', interval_name], inplace=True)
+df_1.set_index(['site', long_int_name, interval_name], inplace=True)
+st.write(df_1)
 for name in dict_redundant.keys():
   frame = dict_redundant[name].copy()
   for col in variables:
