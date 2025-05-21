@@ -237,7 +237,7 @@ for name in dict_diff.keys():
   #   plt.plot(group[xaxis], group[yaxis], label = site)
   for site, group in dataframe.groupby("site"):
     plt.plot(group[xaxis], group[yaxis], label = site)
-  plt.title(yaxis)
+  plt.title(f"difference_{yaxis}")
   plt.xlabel(label)
   plt.grid(True)
   plt.legend(title='Site')
@@ -262,7 +262,7 @@ for name in dict_diff.keys():
   grouped_interval.reset_index(inplace=True)
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
-  plt.title(yaxis)
+  plt.title(f"abs_value_of_difference_{yaxis}")
   plt.xlabel(xaxis)
   plt.grid(True)
   plt.legend(title='Site')
