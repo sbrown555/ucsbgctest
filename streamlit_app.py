@@ -160,8 +160,11 @@ df_temp['Species'] = split_cols[2]
 df_temp['Sensor_Position'] = split_cols[3]
 
 filter_options_temp = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_temp = st.multiselect(label = "Select rows that contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
+filter_temp = st.multiselect(label = ""Filter sensors (select sensors whose names contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
 
+if 'All_sensors' in filter_temp:
+    filter_temp = []
+    
 filter_temp = [x for x in filter_temp if x != 'All sensors']
 
 list_contradictions = [['HiC', 'LowC'], ['Upper', 'Lower'], ['Wet', 'Dry'], ['QUCH', 'QUWI', 'PIPO', 'PISA']]
@@ -200,8 +203,10 @@ df_vwc['Species'] = split_cols[2]
 df_vwc['Sensor_Position'] = split_cols[3]     
 
 filter_options_vwc = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_vwc = st.multiselect(label = "Select rows that contain all of", options = filter_options_vwc, default = 'All sensors', key="vwc_filter")
+filter_vwc = st.multiselect(label = "Filter sensors (select sensors whose names contain all of:", options = filter_options_vwc, default = 'All sensors', key="vwc_filter")
 
+if 'All sensors' in filter_vwc:
+    filter_vwc = []
 filter_vwc = [x for x in filter_vwc if x != 'All sensors']
 
 list_contradictions = [['HiC', 'LowC'], ['Upper', 'Lower'], ['Wet', 'Dry'], ['QUCH', 'QUWI', 'PIPO', 'PISA']]
