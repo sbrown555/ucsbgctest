@@ -276,7 +276,7 @@ for name in dict_diff.keys():
   plt.tight_layout()
   st.pyplot()
   buf = BytesIO()
-  fig.savefig(buf, format="png")
+  plt.savefig(buf, format="png")
   buf.seek(0)
   st.download_button(
     label="Download {title} plot as PNG",
