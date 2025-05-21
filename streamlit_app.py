@@ -5,6 +5,7 @@ import plotly.express as px
 import streamlit as st
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
+from itertools import permutations
 
 st.set_page_config(layout='wide')
 
@@ -197,10 +198,44 @@ filter_options_vwc = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUC
 filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = filter_options_vwc, default = 'All', key="vwc_filter")
 
 if 'All' in filter_vwc:
-    # filter_vwc = filter_options_vwc
-    filter_vwc = []
+    filter_vwc = filter_options_vwc
+else:
+    filter_vwc = [x for x in filter_vwc if x != 'All']
 
-df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
+for term in filter_vwc:
+    df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
+
+
+
+
+
+
+
+# position_options = ['Upper', 'Lower']
+# c_options = ['HiC', 'LowC']
+# moisture_options = ['Wet', 'Dry']
+# species_options = ['QUCH', 'QUWI', 'PIPO', 'PISA']
+
+# dict_options = {'position_options' : ['Upper', 'Lower'],
+#                 'c_options' : ['HiC', 'LowC'], 
+#                 'moisture_options' : ['Wet', 'Dry'],
+#                 'species_options' : ['QUCH', 'QUWI', 'PIPO', 'PISA']}
+
+# filter_vwc 
+# valid_permutations = {' '.join(p) for p in permutations(filter_vwc)}
+
+# df_temp = df_temp[df_temp.isin(filter_temp).all(axis=1)]
+
+
+# for term in filter_vwc:
+#     rows = df_vwc.isin(filter_vwc).any(axis=1)
+    
+
+# for options in dict_options:
+#     intersection = list(set(dict_options[options]) & set(filter_options_vwc))
+# if  in filter_vwc:
+#     intersection = 
+# df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
 
 options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_grouping")
