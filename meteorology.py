@@ -231,6 +231,7 @@ for name in dict_diff.keys():
 # Take absolute value of specified columns
   for col in variables:
     dataframe[col] = dataframe[col].abs()  # or abs(dataframe[col])
+  st.write(dataframe)
 
 # Prepare figure
   sites = dataframe['site'].unique()
