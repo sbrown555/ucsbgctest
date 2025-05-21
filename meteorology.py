@@ -174,7 +174,8 @@ for name in dict_df.keys():
       else:
         st.warning(f"No frames to concatenate for {name}")
         continue
-      
+        
+st.write(dict_redundant.keys())
 dict_diff = {}
 for name in dict_redundant.keys():
   frame = dict_redundant[name]
