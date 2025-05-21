@@ -203,6 +203,7 @@ for name in dict_diff.keys():
   st.write(dict_diff[name])
   dataframe = dict_diff[name]
   dataframe.reset_index(inplace = True)
+  interval_name = dataframe.columns[2]
   # st.write(dataframe.columns)
   label = f"{dataframe.columns[1]}_and_{dataframe.columns[2]}"
   xaxis = label
@@ -216,3 +217,15 @@ for name in dict_diff.keys():
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
+  plt.clf()
+  for col in variables:
+    dataframe[col] = abs(dataframe[col])
+  for site, group in dataframe.groupby(['site', interval_name]).agg(col:'mean'):
+    plt.plot(group[xaxis], group[yaxis], label = site)
+  plt.title(yaxis)
+  plt.xlabel(label)
+  plt.grid(True)
+  plt.legend(title='Site')
+  plt.tight_layout()
+  st.pyplot()
+    
