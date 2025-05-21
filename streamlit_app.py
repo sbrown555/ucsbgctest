@@ -167,6 +167,9 @@ if 'All' in filter_temp:
 
 filter_temp = [x for x in filter_temp if x != 'All']
 
+if ['HiC', 'LowC'] in filter_temp or ['Upper', 'Lower'] in filter_temp or ['Wet', 'Dry'] in filter_temp or ['QUCH', 'QUWI', 'PIPO', 'PISA'] in filter_temp:
+    st.warning('Filter warning: Don't choose all options from a particular field at once')
+
 for term in filter_temp:
     df_temp = df_temp[df_temp.isin([term]).any(axis=1)]
 
