@@ -177,9 +177,11 @@ if not df_1.empty:
   df_1.set_index(['site', long_int_name, interval_name], inplace=True)
   # st.write(df_1)
   for name in dict_redundant.keys():
-    frame = dict_redundant[name].copy()
+    frame = dict_redundant[name]
     for col in variables:
-      frame[col] = frame[col] - df_1[col]
+      new_frame[col] = frame[col] - df_1[col]
+    label = f"{long_int_name}_and_{interval_name}"
+    new_frame[label] = df_1[label]
     dict_diff[name] = frame
     csv_data = frame.to_csv(index=True)
     st.download_button(label = f'difference_dataframe_{name}', data = csv_data, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
@@ -196,6 +198,7 @@ else:
 # Create graphs for comparison of dataframes with different time intervals
 for name in dict_diff.keys():
   st.write(name)
+  st.write(dict_dff[name])
   dataframe = dict_diff[name]
   dataframe.reset_index(inplace = True)
   st.write(dataframe.columns)
