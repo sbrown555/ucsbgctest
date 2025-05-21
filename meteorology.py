@@ -170,6 +170,7 @@ for name in dict_df.keys():
         frame.set_index(['site', interval_name], inplace=True)
         frame = frame.to_csv(index = False)
         st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
+        dict_redundant[name] = frame
       else:
         st.warning(f"No frames to concatenate for {name}")
         continue
