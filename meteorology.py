@@ -165,7 +165,9 @@ for name in dict_df.keys():
       if list_copies:
         frame = pd.concat(list_copies, ignore_index = True)
         # dict_redundant[name] = frame
-        frame.set_index(interval_name, inplace=True)
+        test = len(list(set(frame[interval_name].to_list())))
+        st.write(test)
+        frame.set_index(['site', interval_name], inplace=True)
         frame = frame.to_csv(index = False)
         st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
       else:
