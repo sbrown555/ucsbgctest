@@ -197,8 +197,9 @@ else:
 for name in dict_diff.keys():
   st.write(name)
   dataframe = dict_diff[name]
+  st.write(dataframe.columns)
   label = f"{dataframe.columns[1]}_and_{dataframe.columns[2]}"
-  dataframe[label] = dataframe.iloc[:,1] + interval*dataframe.iloc[:,2]/24
+  dataframe[label] = dataframe + interval*dataframe.iloc[:,2]/24
   dataframe[label] = pd.to_numeric(dataframe[label], errors = 'coerce')
   xaxis = label
   yaxis = 'T_HMP_C'
