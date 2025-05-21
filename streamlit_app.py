@@ -162,10 +162,15 @@ df_temp['Sensor_Position'] = split_cols[3]
 filter_options_temp = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
 filter_temp = st.multiselect(label = "Filter temperature lines by:", options = filter_options_temp, default = 'All', key="temp_filter")
 
+if 'All' in filter_vwc:
+    filter_vwc = filter_options_vwc
+else:
+    filter_vwc = [x for x in filter_vwc if x != 'All']
+
+for term in filter_vwc:
+    df_vwc = df_vwc[df_vwc.isin([term]).any(axis=1)]
 if 'All' in filter_temp:
     filter_temp = filter_options_temp
-
-df_temp = df_temp[df_temp.isin(filter_temp).all(axis=1)]
 
 options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Temperature']]
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
@@ -205,41 +210,8 @@ else:
 for term in filter_vwc:
     df_vwc = df_vwc[df_vwc.isin([term]).any(axis=1)]
 
-
-
-
-
-
-
-# position_options = ['Upper', 'Lower']
-# c_options = ['HiC', 'LowC']
-# moisture_options = ['Wet', 'Dry']
-# species_options = ['QUCH', 'QUWI', 'PIPO', 'PISA']
-
-# dict_options = {'position_options' : ['Upper', 'Lower'],
-#                 'c_options' : ['HiC', 'LowC'], 
-#                 'moisture_options' : ['Wet', 'Dry'],
-#                 'species_options' : ['QUCH', 'QUWI', 'PIPO', 'PISA']}
-
-# filter_vwc 
-# valid_permutations = {' '.join(p) for p in permutations(filter_vwc)}
-
-# df_temp = df_temp[df_temp.isin(filter_temp).all(axis=1)]
-
-
-# for term in filter_vwc:
-#     rows = df_vwc.isin(filter_vwc).any(axis=1)
-    
-
-# for options in dict_options:
-#     intersection = list(set(dict_options[options]) & set(filter_options_vwc))
-# if  in filter_vwc:
-#     intersection = 
-# df_vwc = df_vwc[df_vwc.isin(filter_vwc).any(axis=1)]
-
 options_vwc = [col for col in df_vwc.columns if col not in ['DateTime', 'VWC']]
 group_vwc = st.multiselect(label = "Group soil moisture lines by:", options = options_vwc, default = "Sensor", key="vwc_grouping")
-
 
 if group_vwc:
     df_vwc['group'] = df_vwc[group_vwc].agg(' - '.join, axis=1)
@@ -249,7 +221,6 @@ if group_vwc:
     st.plotly_chart(fig_vwc)
 else:
     st.write("Please select at least one column.")
-
 
 # 4. Error List Section (Columns with NaN or 0 Values)
 def find_errors(df):
