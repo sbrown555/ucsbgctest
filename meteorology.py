@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 import datetime as dt
 import matplotlib.pyplot as plt
+from io import BytesIO
+
 
 url = 'https://raw.githubusercontent.com/sbrown555/ucsbgctest/refs/heads/main/small_data_14May25.csv'
 
@@ -264,12 +266,22 @@ for name in dict_diff.keys():
   grouped_interval.reset_index(inplace=True)
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
-  plt.title(f"Max of abs value of difference of {yaxis} - grouped per week long program")
+  title = f"Max of abs value of difference of {yaxis} - grouped per week long program"
+  # plt.title(f"Max of abs value of difference of {yaxis} - grouped per week long program")
+  plt.title(title)
   plt.xlabel('week of year')
   plt.ylabel(yaxis)
   plt.grid(True)
   plt.legend(title='Site')
   plt.tight_layout()
   st.pyplot()
+  buf = BytesIO()
+  fig.savefig(buf, format="png")
+  buf.seek(0)
+  st.download_button(
+    label="Download {title} plot as PNG",
+    data=buf,
+    file_name=f"{title}.png",
+    mime="image/png")
 
     
