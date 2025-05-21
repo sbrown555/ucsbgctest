@@ -160,7 +160,7 @@ df_temp['Species'] = split_cols[2]
 df_temp['Sensor_Position'] = split_cols[3]
 
 filter_options_temp = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_temp = st.multiselect(label = ""Filter sensors (select sensors whose names contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
+filter_temp = st.multiselect(label = "Filter sensors (select sensors whose names contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
 
 if 'All_sensors' in filter_temp:
     filter_temp = []
