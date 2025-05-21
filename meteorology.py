@@ -144,7 +144,7 @@ for name in dict_df.keys():
       st.write(dict_df[name])
       for i in range(num_copies):
         st.write(i)
-        copy = frame
+        copy = frame.copy()
         copy[interval_name] = copy[interval_name] + 1
         st.write(f"copy column names  = {copy.columns}")
         st.write(copy)
