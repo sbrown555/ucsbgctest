@@ -237,8 +237,9 @@ for name in dict_diff.keys():
   #   plt.plot(group[xaxis], group[yaxis], label = site)
   for site, group in dataframe.groupby("site"):
     plt.plot(group[xaxis], group[yaxis], label = site)
-  plt.title(f"difference_{yaxis}")
+  plt.title(f"Difference 2 hour - 1 hour intervals in {yaxis} - hourly resolution")
   plt.xlabel(label)
+  plt.ylabel("Week and hour fraction")
   plt.grid(True)
   plt.legend(title='Site')
   plt.tight_layout()
@@ -262,7 +263,7 @@ for name in dict_diff.keys():
   grouped_interval.reset_index(inplace=True)
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
-  plt.title(f"abs_value_of_difference_{yaxis}")
+  plt.title(f"Max of abs value of {yaxis} per weekly program")
   plt.xlabel(xaxis)
   plt.grid(True)
   plt.legend(title='Site')
