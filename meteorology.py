@@ -180,7 +180,7 @@ if not df_1.empty:
     new_frame = df_1.copy()
     for col in variables:
       new_frame[col] = frame[col] - df_1[col]
-    label = f"{long_int_name}_and_1.0_hour_interval"
+    label = f"{long_int_name}_and_2.0_hour_interval"
     new_frame[label] = df_1[label]
     name_diff = f"{name}_diff"
     dict_diff[name] = new_frame
