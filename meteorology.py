@@ -145,7 +145,9 @@ for name in dict_df.keys():
         copy = frame
         copy[interval_name] = copy[interval_name] + 25
         st.write(f"copy column names  = {copy.columns}")
+        st.write(copy)
         st.write(f"frame column names  = {frame.columns}")
+        st.write(frame)
         # copy.set_index(interval_name, inplace = True)
         # frame.set_index(interval_name, inplace = True)
         frame_test = len(list(set(frame[interval_name].to_list())))
