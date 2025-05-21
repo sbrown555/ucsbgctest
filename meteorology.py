@@ -178,7 +178,7 @@ for name in dict_df.keys():
 st.write(dict_redundant.keys())
 dict_diff = {}
 for name in dict_redundant.keys():
-  frame = dict_redundant[name]
+  frame = dict_redundant[name].copy()
   for col in variables:
     frame[col] = frame[col] - df_1[col]
   dict_diff[name] = frame
