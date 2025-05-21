@@ -25,8 +25,6 @@ df['date'] = pd.to_datetime(df['date'])
 df['hour'] = df['datetime'].dt.strftime('%H')
 df['day_of_year'] = (df['date'].dt.strftime('%j').astype(int) - 1)
 
-# long_int = st.text_input('Input a greater-than-daily interval in days')
-
 # Update indicator columns
 variables = ['T_HMP_C', 'RH_%', 'PAR_IN_umol_photons.m2.s', 'soil_moisture_10cm_m3.m3', 'soil_moisture_30cm_m3.m3','soil_moisture_60cm_m3.m3', 'soil_moisture_90cm_m3.m3']
 indicator_columns = [col for col in df.columns if col not in variables]
@@ -118,14 +116,17 @@ for frame in dict_df.keys():
 
 st.write(min_temps)
 
-# st.write('updated')
-
+# Download option for datasets used to make graphs
 dict_csv = {}
 for name in dict_df.keys():
   frame = dict_df[name]
-  # dict_csv[f"{name}_csv"] = frame.to_csv(index = True)
   csv_data = frame.to_csv(index = True)
   st.download_button(label = f"download_{name}", data = csv_data, file_name = f"{name}.csv", mime='text/csv')
+
+
+# ___________________
+# Create dataframes with differences between dataframes using different time intervals
+st.write('Comparison of dataframes with different subdaily time intervals')
 
 dict_redundant = {}
 for name in dict_df.keys():
@@ -135,37 +136,18 @@ for name in dict_df.keys():
     interval_short = int(float(interval_short))
     st.write(f"interval_short = {interval_short}")
     if interval_short == 1:
-      st.write("PDSPFSPDGFPP")
       df_1 = frame
     elif interval_short > 1:
       num_copies = interval_short - 1
-      # st.write(f"num_copies = {num_copies}")
       frame[interval_name] = frame[interval_name]*interval_short
       st.write(frame)
-      # st.write(dict_df[name])
       list_copies = [frame]
       for i in range(num_copies):
-        # st.write(i)
         copy = frame.copy()
         copy[interval_name] = copy[interval_name] + 1
-        # st.write(f"copy column names  = {copy.columns}")
-        # st.write(copy)
-        # st.write(f"frame column names  = {frame.columns}")
-        # st.write(dict_df[name])
-        # copy.set_index(interval_name, inplace = True)
-        # frame.set_index(interval_name, inplace = True)
-        # frame_test = len(list(set(frame[interval_name].to_list())))
-        # st.write(frame_test)
-        # copy_test = len(list(set(copy[interval_name].to_list())))
-        # st.write(copy_test)
-        # frame = pd.concat([frame, copy], ignore_index = True)
         list_copies.append(copy)
-        # test = len(list(set(frame[interval_name].to_list())))
-      #   st.write(list_copies)
-      # st.write(list_copies)
       if list_copies:
         frame = pd.concat(list_copies, ignore_index = True)
-        # dict_redundant[name] = frame
         test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
         frame.set_index(['site', long_int_name, interval_name], inplace=True)
@@ -176,11 +158,9 @@ for name in dict_df.keys():
         st.warning(f"No frames to concatenate for {name}")
         continue
         
-# st.write(dict_redundant.keys())
 dict_diff = {}
 df_1.reset_index(inplace=True)
-#should eventually make the column names in the line below more general
-df_1.rename(columns={'1.0_hour_interval': '2.0_hour_interval'}, inplace=True)
+df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
 st.write(df_1.columns)
 df_1.set_index(['site', long_int_name, interval_name], inplace=True)
 st.write(df_1)
@@ -192,30 +172,5 @@ for name in dict_redundant.keys():
   csv_data = frame.to_csv(index=True)
   st.download_button(label = f'difference_dataframe_{name}', data = csv_data, file_name = f'difference_dataframe_{name}.csv', mime = 'text/csv')
 
-# st.write('updated agian')
 
-
-
-
-      
-# dict_diff = {}
-# for n
-
-# for name in dict_interval:
-#   interval_short = int(dict_interval[name])
-#   if interval_short > 1:
-#     copies = interval_short - 1
-#     copy = dict_df[name
-    
-
-# dict_interval = {}
-# for name in dict_df.keys():
-#   frame = dict_df[name]
-#   if ">" in name:
-#     dict_interval[name] = frame.split('<')[1].strip()
-
-# for name in dict_interval:
-#   interval_short = int(dict_interval[name])
-#   if interval_short > 1:
-#     copies = interval_short - 1
-#     copy = dict_df[name
+# Create graphs for comparison of dataframes with different time intervals
