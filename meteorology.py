@@ -172,7 +172,7 @@ if not df_1.empty:
   dict_diff = {}
   df_1.reset_index(inplace=True)
   df_1.rename(columns={'1.0_hour_interval': interval_name}, inplace=True)
-  st.write(df_1.columns)
+  # st.write(df_1.columns)
   df_1.set_index(['site', long_int_name, interval_name], inplace=True)
   # st.write(df_1)
   for name in dict_redundant.keys():
@@ -201,7 +201,7 @@ for name in dict_diff.keys():
   st.write(dict_diff[name])
   dataframe = dict_diff[name]
   dataframe.reset_index(inplace = True)
-  st.write(dataframe.columns)
+  # st.write(dataframe.columns)
   label = f"{dataframe.columns[1]}_and_{dataframe.columns[2]}"
   xaxis = label
   yaxis = 'T_HMP_C'
