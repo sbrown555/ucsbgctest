@@ -192,7 +192,7 @@ for name in dict_diff.keys():
   dataframe = dict_diff[name]
   xaxis = dataframe.columns[-1]
   label = xaxis
-  yaxis = 'T_HMP_(C)'
+  yaxis = 'T_HMP_C'
   plt.clf()
   for site, group in dataframe.groupby("site"):
     plt.plot(group[xaxis], group[yaxis], label = site)
