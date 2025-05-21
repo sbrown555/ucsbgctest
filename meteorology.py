@@ -198,7 +198,7 @@ else:
 # Create graphs for comparison of dataframes with different time intervals
 for name in dict_diff.keys():
   st.write(name)
-  st.write(dict_dff[name])
+  st.write(dict_diff[name])
   dataframe = dict_diff[name]
   dataframe.reset_index(inplace = True)
   st.write(dataframe.columns)
