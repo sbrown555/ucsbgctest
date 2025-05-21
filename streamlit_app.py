@@ -159,13 +159,13 @@ df_temp['Moisture_Treatment'] = split_cols[1]
 df_temp['Species'] = split_cols[2]
 df_temp['Sensor_Position'] = split_cols[3]
 
-filter_options_temp = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
-filter_temp = st.multiselect(label = "Filter temperature lines by:", options = filter_options_temp, default = 'All', key="temp_filter")
+filter_options_temp = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
+filter_temp = st.multiselect(label = "Select rows that contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
 
-if 'All' in filter_temp:
-    filter_temp = []
+# if 'All rows' in filter_temp:
+#     filter_temp = []
 
-filter_temp = [x for x in filter_temp if x != 'All']
+filter_temp = [x for x in filter_temp if x != 'All sensors']
 
 list_contradictions = [['HiC', 'LowC'], ['Upper', 'Lower'], ['Wet', 'Dry'], ['QUCH', 'QUWI', 'PIPO', 'PISA']]
 for cont in list_contradictions:
