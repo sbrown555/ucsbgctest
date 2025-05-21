@@ -140,6 +140,8 @@ for name in dict_df.keys():
       num_copies = interval_short - 1
       st.write(f"num_copies = {num_copies}")
       frame[interval_name] = frame[interval_name]*interval_short
+      st.write(frame)
+      st.write(dict_df[name])
       for i in range(num_copies):
         st.write(i)
         copy = frame
