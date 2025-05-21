@@ -131,7 +131,6 @@ dict_redundant = {}
 for name in dict_df.keys():
   frame = dict_df[name]
   if ">" in name:
-    st.write(name)
     interval_short = name.split('>')[1].strip()
     interval_short = int(float(interval_short))
     if interval_short == 1:
@@ -142,6 +141,7 @@ for name in dict_df.keys():
       frame[interval_name] = frame[interval_name]*interval_short
       st.write(frame)
       st.write(dict_df[name])
+      list_copies = [frame]
       for i in range(num_copies):
         st.write(i)
         copy = frame.copy()
@@ -156,10 +156,12 @@ for name in dict_df.keys():
         st.write(frame_test)
         copy_test = len(list(set(copy[interval_name].to_list())))
         st.write(copy_test)
-        frame = pd.concat([frame, copy], ignore_index = True)
-        dict_redundant[name] = frame
+        # frame = pd.concat([frame, copy], ignore_index = True)
+        list_copies = list_copies.append(copy)
         test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
+      frame = pd.concat[list_copies, ignore_index = True)
+      # dict_redundant[name] = frame
       frame = frame.to_csv(index = False)
       st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
       
