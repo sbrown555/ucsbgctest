@@ -203,6 +203,7 @@ for name in dict_diff.keys():
   st.write(dict_diff[name])
   dataframe = dict_diff[name]
   dataframe.reset_index(inplace = True)
+  long_int_name = dataframe.columns[1]
   interval_name = dataframe.columns[2]
   # st.write(dataframe.columns)
   label = f"{dataframe.columns[1]}_and_{dataframe.columns[2]}"
@@ -258,7 +259,7 @@ for name in dict_diff.keys():
   # st.pyplot(fig)
   grouped_interval = dataframe.groupby(['site',interval_name]).agg({col:'max' for col in variables})
   grouped_interval.reset_index(inplace=True)
-  xaxis = interval_name
+  xaxis = long_int_name
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
   plt.title(yaxis)
