@@ -179,7 +179,7 @@ for name in dict_df.keys():
 # st.write(dict_redundant.keys())
 dict_diff = {}
 df_1.reset_index(inplace=True)
-df_1.rename(columns={'1.0_hour_interval':interval_name})
+df_1.rename(columns={'1.0_hour_interval': '2.0_hour_interval'})
 st.write(df_1.columns)
 df_1.set_index(['site', long_int_name, interval_name], inplace=True)
 st.write(df_1)
