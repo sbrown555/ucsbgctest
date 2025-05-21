@@ -180,7 +180,7 @@ for name in dict_df.keys():
 dict_diff = {}
 df_1.reset_index(inplace=True)
 df_1.rename(columns={'1.0_hour_interval':interval_name})
-df_1.set_index(['site', long_int_name, '1.0_hour_interval'], inplace=True)
+df_1.set_index(['site', long_int_name, interval_name], inplace=True)
 st.write(df_1)
 for name in dict_redundant.keys():
   frame = dict_redundant[name].copy()
