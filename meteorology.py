@@ -187,3 +187,17 @@ else:
   st.warning('for comparison of dataframes include a short time interval of 1 and make sure long intervals are the same')
 
 # Create graphs for comparison of dataframes with different time intervals
+for name in dict_diff.keys():
+  dataframe = dict_diff[name]
+  xaxis = dataframe.columns[-1]
+  label = xaxis
+  yaxis = 'T_HMP_(C)'
+  plt.clf()
+  for site, group in dataframe.groupby("site"):
+    plt.plot(group[xaxis], group[yaxis], label = site)
+  plt.title(yaxis)
+  plt.xlabel(label)
+  plt.grid(True)
+  plt.legend(title='Site')
+  plt.tight_layout()
+  st.pyplot()
