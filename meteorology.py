@@ -232,7 +232,9 @@ for name in dict_diff.keys():
   for col in variables:
     dataframe[col] = dataframe[col].abs()  # or abs(dataframe[col])
   st.write(dataframe)
-  for site, group in dataframe.groupby(['site', interval_name]).agg({col:'max' for col in variables}):
+  # for site, group in dataframe.groupby(['site', interval_name]).agg({col:'max' for col in variables}):
+  #   plt.plot(group[xaxis], group[yaxis], label = site)
+  for site, group in dataframe.groupby("site"):
     plt.plot(group[xaxis], group[yaxis], label = site)
   plt.title(yaxis)
   plt.xlabel(label)
