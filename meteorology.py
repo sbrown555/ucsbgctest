@@ -232,16 +232,10 @@ for name in dict_diff.keys():
   for col in variables:
     dataframe[col] = dataframe[col].abs()  # or abs(dataframe[col])
   st.write(dataframe)
-
-# Prepare figure
   sites = dataframe['site'].unique()
   fig, axes = plt.subplots(nrows=len(sites), ncols=1, figsize=(8, 4 * len(sites)), sharex=True)
-
-# Ensure axes is iterable even with one site
   if len(sites) == 1:
     axes = [axes]
-
-# Plot for each site
   for ax, site in zip(axes, sites):
     group = dataframe[dataframe['site'] == site].groupby(interval_name).agg({xaxis: 'max', yaxis: 'max'}).reset_index()
     ax.plot(group[xaxis], group[yaxis], label=f"{site}")
@@ -249,7 +243,6 @@ for name in dict_diff.keys():
     ax.set_ylabel(yaxis)
     ax.grid(True)
     ax.legend()
-
   axes[-1].set_xlabel(xaxis)
   plt.tight_layout()
   st.pyplot(fig)
