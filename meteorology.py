@@ -177,7 +177,7 @@ if not df_1.empty:
   # st.write(df_1)
   for name in dict_redundant.keys():
     frame = dict_redundant[name]
-    new_frame = df_1.copy
+    new_frame = df_1.copy()
     for col in variables:
       new_frame[col] = frame[col] - df_1[col]
     label = f"{long_int_name}_and_{interval_name}"
