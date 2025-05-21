@@ -162,19 +162,12 @@ df_temp['Sensor_Position'] = split_cols[3]
 filter_options_temp = ['All sensors', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
 filter_temp = st.multiselect(label = "Select rows that contain all of:", options = filter_options_temp, default = 'All sensors', key="temp_filter")
 
-# if 'All rows' in filter_temp:
-#     filter_temp = []
-
 filter_temp = [x for x in filter_temp if x != 'All sensors']
 
 list_contradictions = [['HiC', 'LowC'], ['Upper', 'Lower'], ['Wet', 'Dry'], ['QUCH', 'QUWI', 'PIPO', 'PISA']]
 for cont in list_contradictions:
     if all(item in filter_temp for item in cont):
         st.warning("Filter warning: Don't choose all options from a particular field at once")
-
-
-# if ['HiC', 'LowC'] in filter_temp or ['Upper', 'Lower'] in filter_temp or ['Wet', 'Dry'] in filter_temp or ['QUCH', 'QUWI', 'PIPO', 'PISA'] in filter_temp:
-#     st.warning("Filter warning: Don't choose all options from a particular field at once")
 
 for term in filter_temp:
     df_temp = df_temp[df_temp.isin([term]).any(axis=1)]
@@ -209,10 +202,12 @@ df_vwc['Sensor_Position'] = split_cols[3]
 filter_options_vwc = ['All', 'Upper', 'Lower', 'HiC', 'LowC', 'Wet', 'Dry', 'QUCH', 'QUWI', 'PIPO', 'PISA']
 filter_vwc = st.multiselect(label = "Filter soil moisture lines by:", options = filter_options_vwc, default = 'All', key="vwc_filter")
 
-if 'All' in filter_vwc:
-    filter_vwc = []
+filter_vwc = [x for x in filter_vwc if x != 'All sensors']
 
-filter_vwc = [x for x in filter_vwc if x != 'All']
+list_contradictions = [['HiC', 'LowC'], ['Upper', 'Lower'], ['Wet', 'Dry'], ['QUCH', 'QUWI', 'PIPO', 'PISA']]
+for cont in list_contradictions:
+    if all(item in filter_vwc for item in cont):
+        st.warning("Filter warning: Don't choose all options from a particular field at once")
 
 for term in filter_vwc:
     df_vwc = df_vwc[df_vwc.isin([term]).any(axis=1)]
