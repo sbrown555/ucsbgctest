@@ -164,7 +164,7 @@ filter_temp = st.multiselect(label = "Filter temperature lines by:", options = f
 if 'All' in filter_temp:
     filter_temp = filter_options_temp
 
-df_temp = df_temp[df_temp.isin(filter_temp).any(axis=1)]
+df_temp = df_temp[df_temp.isin(filter_temp).all(axis=1)]
 
 options_temp = [col for col in df_temp.columns if col not in ['DateTime', 'Temperature']]
 group_temp = st.multiselect(label = "Group temperature lines by:", options = options_temp, default = "Sensor", key="temp_multiselect")
