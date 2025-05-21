@@ -160,10 +160,14 @@ for name in dict_df.keys():
         list_copies = list_copies.append(copy)
         test = len(list(set(frame[interval_name].to_list())))
         st.write(test)
-      frame = pd.concat([list_copies], ignore_index = True)
-      # dict_redundant[name] = frame
-      frame = frame.to_csv(index = False)
-      st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
+      if list_copies:
+        frame = pd.concat([list_copies], ignore_index = True)
+        # dict_redundant[name] = frame
+        frame = frame.to_csv(index = False)
+        st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
+      else 
+        st.warning(f"No frames to concatenate for {name}")
+        continue
       
 dict_diff = {}
 for name in dict_redundant.keys():
