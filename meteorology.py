@@ -232,18 +232,26 @@ for name in dict_diff.keys():
   for col in variables:
     dataframe[col] = dataframe[col].abs()  # or abs(dataframe[col])
   st.write(dataframe)
-  sites = dataframe['site'].unique()
-  fig, axes = plt.subplots(nrows=len(sites), ncols=1, figsize=(8, 4 * len(sites)), sharex=True)
-  if len(sites) == 1:
-    axes = [axes]
-  for ax, site in zip(axes, sites):
-    group = dataframe[dataframe['site'] == site].groupby(interval_name).agg({xaxis: 'max', yaxis: 'max'}).reset_index()
-    ax.plot(group[xaxis], group[yaxis], label=f"{site}")
-    ax.set_title(f"{yaxis} - {site}")
-    ax.set_ylabel(yaxis)
-    ax.grid(True)
-    ax.legend()
-  axes[-1].set_xlabel(xaxis)
+  for site, group in dataframe.groupby(['site', interval_name]).agg(col:'max'):
+    plt.plot(group[xaxis], group[yaxis], label = site)
+  plt.title(yaxis)
+  plt.xlabel(label)
+  plt.grid(True)
+  plt.legend(title='Site')
   plt.tight_layout()
-  st.pyplot(fig)
+  st.pyplot()
+  # sites = dataframe['site'].unique()
+  # fig, axes = plt.subplots(nrows=len(sites), ncols=1, figsize=(8, 4 * len(sites)), sharex=True)
+  # if len(sites) == 1:
+  #   axes = [axes]
+  # for ax, site in zip(axes, sites):
+  #   group = dataframe[dataframe['site'] == site].groupby(interval_name).agg({xaxis: 'max', yaxis: 'max'}).reset_index()
+  #   ax.plot(group[xaxis], group[yaxis], label=f"{site}")
+  #   ax.set_title(f"{yaxis} - {site}")
+  #   ax.set_ylabel(yaxis)
+  #   ax.grid(True)
+  #   ax.legend()
+  # axes[-1].set_xlabel(xaxis)
+  # plt.tight_layout()
+  # st.pyplot(fig)
     
