@@ -163,7 +163,7 @@ for name in dict_df.keys():
       #   st.write(list_copies)
       # st.write(list_copies)
       if list_copies:
-        frame = pd.concat([list_copies], ignore_index = True)
+        frame = pd.concat(list_copies, ignore_index = True)
         # dict_redundant[name] = frame
         frame = frame.to_csv(index = False)
         st.download_button(label = 'redundant dataframe', data = frame, file_name = 'redundant.csv', mime = 'text/csv')
