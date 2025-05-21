@@ -158,7 +158,7 @@ for name in dict_df.keys():
         # copy_test = len(list(set(copy[interval_name].to_list())))
         # st.write(copy_test)
         # frame = pd.concat([frame, copy], ignore_index = True)
-        list_copies = list_copies.append(copy)
+        list_copies.append(copy)
         # test = len(list(set(frame[interval_name].to_list())))
         st.write(list_copies)
       st.write(list_copies)
