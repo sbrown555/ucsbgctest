@@ -203,7 +203,7 @@ else:
     filter_vwc = [x for x in filter_vwc if x != 'All']
 
 for term in filter_vwc:
-    df_vwc = df_vwc[df_vwc.isin(term).any(axis=1)]
+    df_vwc = df_vwc[df_vwc.isin([term]).any(axis=1)]
 
 
 
