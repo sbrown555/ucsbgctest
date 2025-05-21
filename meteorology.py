@@ -256,7 +256,7 @@ for name in dict_diff.keys():
   # axes[-1].set_xlabel(xaxis)
   # plt.tight_layout()
   # st.pyplot(fig)
-  grouped_interval = dataframe.groupby['site',interval_name]).agg({col:'max' for col in variables})
+  grouped_interval = dataframe.groupby(['site',interval_name]).agg({col:'max' for col in variables})
   for site, group in grouped_interval.groupby("site"):
     plt.plot(group[xaxis],group[yaxis], label = site)
   plt.title(yaxis)
