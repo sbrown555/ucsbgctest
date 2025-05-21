@@ -160,8 +160,8 @@ for name in dict_df.keys():
         # frame = pd.concat([frame, copy], ignore_index = True)
         list_copies.append(copy)
         # test = len(list(set(frame[interval_name].to_list())))
-        st.write(list_copies)
-      st.write(list_copies)
+      #   st.write(list_copies)
+      # st.write(list_copies)
       if list_copies:
         frame = pd.concat([list_copies], ignore_index = True)
         # dict_redundant[name] = frame
